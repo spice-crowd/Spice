@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spice Crowd — From Indian Streets to Your Plate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #F4A116;
+    --deep-red: #C0392B;
+    --turmeric: #E8B84B;
+    --cinnamon: #8B4513;
+    --charcoal: #1A1410;
+    --cream: #FAF3E8;
+    --warm-black: #0D0A07;
+    --spice-orange: #E05C15;
+    --cardamom: #4A7C59;
+    --text-primary: #FAF3E8;
+    --text-muted: #A89880;
+    --surface: #1E1610;
+    --surface2: #261C14;
+  }
+  [data-theme="light"] {
+    --text-primary: #1A1410;
+    --text-muted: #6B5744;
+    --surface: #FAF3E8;
+    --surface2: #F0E6D3;
+    --charcoal: #FAF3E8;
+    --warm-black: #FAF3E8;
+    --cream: #1A1410;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-black);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--saffron);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-trail {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--saffron);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0.5;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* LOADING SCREEN */
+  .loader {
+    position: fixed; inset: 0; z-index: 99999;
+    background: var(--warm-black);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
+  }
+  .loader.hidden { opacity: 0; visibility: hidden; }
+  .loader-spices {
+    display: flex; gap: 12px; margin-bottom: 24px;
+  }
+  .loader-spice {
+    font-size: 2rem;
+    animation: floatLoader 1.2s ease-in-out infinite;
+  }
+  .loader-spice:nth-child(1) { animation-delay: 0s; }
+  .loader-spice:nth-child(2) { animation-delay: 0.2s; }
+  .loader-spice:nth-child(3) { animation-delay: 0.4s; }
+  .loader-spice:nth-child(4) { animation-delay: 0.6s; }
+  @keyframes floatLoader {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+    50% { transform: translateY(-16px) rotate(15deg); opacity: 1; }
+  }
+  .loader-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--saffron);
+    letter-spacing: 0.15em;
+  }
+  .loader-sub {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 8px;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, backdrop-filter 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(13,10,7,0.85);
+    backdrop-filter: blur(20px);
+    padding: 14px 48px;
+    border-bottom: 1px solid rgba(244,161,22,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--saffron);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .nav-logo span { color: var(--cream); }
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--saffron);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-actions { display: flex; align-items: center; gap: 16px; }
+  .theme-toggle {
+    background: none; border: 1px solid rgba(244,161,22,0.3);
+    color: var(--saffron); padding: 6px 14px; border-radius: 20px;
+    cursor: none; font-size: 0.8rem; letter-spacing: 0.1em;
+    transition: all 0.3s;
+  }
+  .theme-toggle:hover { background: var(--saffron); color: var(--warm-black); }
+  .nav-cart {
+    background: var(--saffron); color: var(--warm-black);
+    border: none; padding: 10px 20px; border-radius: 24px;
+    font-weight: 600; font-size: 0.875rem; cursor: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .nav-cart:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(244,161,22,0.4); }
+
+  /* HERO */
+  #hero {
+    height: 100vh; min-height: 700px;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    background: var(--warm-black);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 50%, rgba(244,161,22,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(192,57,43,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 80% 20%, rgba(232,184,75,0.08) 0%, transparent 60%);
+  }
+  .hero-texture {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F4A116' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .floating-spices {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .fs {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0.15;
+    animation: floatAround linear infinite;
+  }
+  @keyframes floatAround {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.15; }
+    90% { opacity: 0.15; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 1400px; margin: 0 auto;
+    padding: 0 48px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 80px;
+    width: 100%;
+  }
+  .hero-left {}
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(244,161,22,0.12);
+    border: 1px solid rgba(244,161,22,0.3);
+    color: var(--saffron); padding: 6px 16px; border-radius: 20px;
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.8s ease 0.15s both;
+  }
+  .hero-title .accent { color: var(--saffron); font-style: italic; }
+  .hero-title .line2 { display: block; }
+  .hero-sub {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.8s ease 0.3s both;
+  }
+  .hero-btns {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease 0.45s both;
+  }
+  .btn-primary {
+    background: var(--saffron); color: var(--warm-black);
+    padding: 16px 36px; border-radius: 40px;
+    font-weight: 700; font-size: 0.95rem; border: none;
+    cursor: none; letter-spacing: 0.05em;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(244,161,22,0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(244,161,22,0.5);
+    background: var(--turmeric);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-primary); border: 1px solid rgba(250,243,232,0.3);
+    padding: 16px 36px; border-radius: 40px;
+    font-size: 0.95rem; cursor: none; letter-spacing: 0.05em;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--saffron);
+    color: var(--saffron);
+    background: rgba(244,161,22,0.08);
+  }
+  .hero-right {
+    position: relative;
+    animation: fadeInRight 1s ease 0.3s both;
+  }
+  .hero-visual {
+    width: 100%; aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 40% 40%, rgba(244,161,22,0.25) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(192,57,43,0.2) 0%, transparent 50%),
+      conic-gradient(from 0deg, #8B451310, #F4A11620, #C0392B15, #E8B84B15, #8B451310);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-visual::before {
+    content: '';
+    position: absolute; inset: 10%;
+    border-radius: 50%;
+    border: 1px solid rgba(244,161,22,0.2);
+    animation: spin 20s linear infinite;
+  }
+  .hero-visual::after {
+    content: '';
+    position: absolute; inset: 20%;
+    border-radius: 50%;
+    border: 1px dashed rgba(244,161,22,0.15);
+    animation: spin 15s linear infinite reverse;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero-center-emoji {
+    font-size: 7rem;
+    position: relative; z-index: 2;
+    filter: drop-shadow(0 0 40px rgba(244,161,22,0.5));
+    animation: heroFloat 3s ease-in-out infinite;
+  }
+  @keyframes heroFloat {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.05); }
+  }
+  .hero-orbits {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .orbit-item {
+    position: absolute;
+    font-size: 2rem;
+    filter: drop-shadow(0 0 10px rgba(244,161,22,0.3));
+    animation: orbit linear infinite;
+  }
+  @keyframes orbit {
+    from { transform: rotate(var(--start)) translateX(var(--r)) rotate(calc(-1 * var(--start))); }
+    to { transform: rotate(calc(var(--start) + 360deg)) translateX(var(--r)) rotate(calc(-1 * (var(--start) + 360deg))); }
+  }
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 48px;
+    animation: fadeInUp 0.8s ease 0.6s both;
+  }
+  .stat { }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--saffron);
+  }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* MARQUEE */
+  .marquee-bar {
+    background: var(--saffron);
+    padding: 14px 0; overflow: hidden;
+    display: flex;
+  }
+  .marquee-track {
+    display: flex; gap: 0;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-track span {
+    color: var(--warm-black);
+    font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0 32px;
+  }
+  .marquee-track span.dot { color: var(--cinnamon); font-size: 1rem; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTIONS COMMON */
+  section { padding: 100px 48px; max-width: 1400px; margin: 0 auto; }
+  .section-full { max-width: 100%; padding: 100px 0; }
+  .section-label {
+    font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 16px; display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 1.05rem; line-height: 1.7;
+    max-width: 580px;
+  }
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* BRAND STORY */
+  #story { background: var(--surface); border-radius: 24px; margin: 0 24px; padding: 100px; }
+  .story-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center; margin-top: 60px;
+  }
+  .story-left {}
+  .story-cards {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .story-card {
+    background: var(--surface2);
+    border: 1px solid rgba(244,161,22,0.1);
+    border-radius: 16px; padding: 24px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .story-card:hover { transform: translateY(-4px); border-color: rgba(244,161,22,0.4); }
+  .story-card-icon { font-size: 2rem; margin-bottom: 12px; }
+  .story-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; margin-bottom: 8px;
+  }
+  .story-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+  .story-right {}
+  .story-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-style: italic; line-height: 1.5;
+    color: var(--saffron); margin-bottom: 32px;
+    position: relative; padding-left: 32px;
+  }
+  .story-quote::before {
+    content: '"';
+    position: absolute; left: 0; top: -10px;
+    font-size: 5rem; color: rgba(244,161,22,0.2);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+  .story-text { color: var(--text-muted); line-height: 1.85; margin-bottom: 20px; font-size: 1rem; }
+  .story-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
+  .badge {
+    background: rgba(244,161,22,0.1);
+    border: 1px solid rgba(244,161,22,0.25);
+    color: var(--saffron); padding: 6px 16px;
+    border-radius: 20px; font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* REGIONS */
+  #regions { padding: 100px 48px; }
+  .regions-header { text-align: center; margin-bottom: 60px; }
+  .regions-header .section-sub { margin: 0 auto; }
+  .regions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .region-card {
+    background: var(--surface);
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(244,161,22,0.08);
+    cursor: none; transition: transform 0.4s, box-shadow 0.4s;
+    position: relative;
+  }
+  .region-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+  .region-banner {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; position: relative; overflow: hidden;
+  }
+  .region-card:hover .region-banner-emoji { transform: scale(1.2) rotate(10deg); }
+  .region-banner-emoji { transition: transform 0.4s; font-size: 4rem; }
+  .region-overlay {
+    position: absolute; inset: 0; opacity: 0;
+    transition: opacity 0.4s;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .region-card:hover .region-overlay { opacity: 1; }
+  .region-overlay p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-style: italic;
+    text-align: center; line-height: 1.6;
+  }
+  .region-body { padding: 24px; }
+  .region-city {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 8px;
+  }
+  .region-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 10px;
+  }
+  .region-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+  .region-tags { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+  .region-tag {
+    background: rgba(244,161,22,0.08);
+    border: 1px solid rgba(244,161,22,0.15);
+    color: var(--text-muted);
+    font-size: 0.7rem; padding: 3px 10px; border-radius: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* PRODUCTS */
+  #products { padding: 100px 48px; background: var(--surface); margin: 0 0; max-width: 100%; }
+  .products-inner { max-width: 1400px; margin: 0 auto; }
+  .products-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 48px; flex-wrap: gap;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--surface2);
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(244,161,22,0.08);
+    transition: transform 0.35s, box-shadow 0.35s;
+    position: relative; cursor: none;
+  }
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(244,161,22,0.2);
+  }
+  .product-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    background: var(--deep-red);
+    color: #fff; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 10px;
+  }
+  .product-img {
+    height: 220px; display: flex; align-items: center; justify-content: center;
+    font-size: 5rem; position: relative;
+    background: radial-gradient(circle, rgba(244,161,22,0.08) 0%, transparent 70%);
+    overflow: hidden;
+  }
+  .product-img-emoji {
+    transition: transform 0.4s;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+  }
+  .product-card:hover .product-img-emoji { transform: scale(1.15) translateY(-8px); }
+  .product-info { padding: 20px; }
+  .product-category {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 8px;
+  }
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;
+  }
+  .product-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
+  .product-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .heat-meter { display: flex; gap: 3px; }
+  .heat-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transition: background 0.3s;
+  }
+  .heat-dot.active { background: var(--deep-red); }
+  .stars { font-size: 0.8rem; color: var(--saffron); }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--saffron);
+  }
+  .add-cart {
+    background: var(--saffron); color: var(--warm-black);
+    border: none; padding: 10px 20px; border-radius: 24px;
+    font-weight: 700; font-size: 0.8rem; cursor: none;
+    transition: all 0.3s; letter-spacing: 0.05em;
+  }
+  .add-cart:hover {
+    background: var(--turmeric);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(244,161,22,0.4);
+  }
+
+  /* WHY */
+  #why { padding: 100px 48px; }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px; margin-top: 60px;
+  }
+  .why-card {
+    background: var(--surface);
+    border: 1px solid rgba(244,161,22,0.08);
+    border-radius: 20px; padding: 36px;
+    transition: all 0.35s;
+    position: relative; overflow: hidden;
+  }
+  .why-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--saffron), var(--deep-red));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .why-card:hover::before { transform: scaleX(1); }
+  .why-card:hover { transform: translateY(-6px); border-color: rgba(244,161,22,0.2); }
+  .why-icon { font-size: 2.5rem; margin-bottom: 20px; }
+  .why-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; margin-bottom: 10px;
+  }
+  .why-text { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; }
+
+  /* EXPERIENCE */
+  #experience {
+    background: linear-gradient(135deg, #0D0A07 0%, #1A0E08 40%, #0D0A07 100%);
+    padding: 120px 48px; max-width: 100%;
+    position: relative; overflow: hidden;
+  }
+  .exp-inner { max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
+  .exp-particles { position: absolute; inset: 0; pointer-events: none; }
+  .exp-particle {
+    position: absolute;
+    font-size: 1.2rem;
+    animation: expFloat linear infinite;
+    opacity: 0.12;
+  }
+  @keyframes expFloat {
+    0% { transform: translateY(100%) rotate(0deg); }
+    100% { transform: translateY(-100px) rotate(720deg); }
+  }
+  .exp-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center; margin-top: 60px;
+  }
+  .exp-visual {
+    position: relative;
+    height: 500px; border-radius: 24px;
+    background: var(--surface);
+    border: 1px solid rgba(244,161,22,0.15);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .exp-bazaar {
+    text-align: center; position: relative; z-index: 2;
+  }
+  .exp-bazaar-emoji { font-size: 5rem; display: block; margin-bottom: 16px; }
+  .exp-bazaar-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-style: italic; color: var(--saffron);
+  }
+  .exp-glow {
+    position: absolute; border-radius: 50%;
+    filter: blur(60px);
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+  @keyframes glowPulse { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+  .exp-features { display: flex; flex-direction: column; gap: 24px; }
+  .exp-feature {
+    background: rgba(244,161,22,0.05);
+    border: 1px solid rgba(244,161,22,0.1);
+    border-radius: 16px; padding: 24px 28px;
+    display: flex; gap: 20px; align-items: flex-start;
+    transition: all 0.3s;
+  }
+  .exp-feature:hover {
+    background: rgba(244,161,22,0.1);
+    border-color: rgba(244,161,22,0.3);
+    transform: translateX(6px);
+  }
+  .exp-feature-icon { font-size: 2rem; flex-shrink: 0; }
+  .exp-feature h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; margin-bottom: 6px;
+  }
+  .exp-feature p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* RECIPES */
+  #recipes { padding: 100px 48px; }
+  .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px; margin-top: 60px;
+  }
+  .recipe-card {
+    background: var(--surface);
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(244,161,22,0.08);
+    cursor: none; transition: all 0.35s;
+  }
+  .recipe-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  }
+  .recipe-img {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    font-size: 4.5rem; position: relative;
+  }
+  .recipe-body { padding: 20px; }
+  .recipe-meta { display: flex; gap: 16px; margin-bottom: 12px; }
+  .recipe-meta-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.75rem; color: var(--text-muted);
+  }
+  .recipe-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;
+  }
+  .recipe-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+  .recipe-btn {
+    background: transparent;
+    border: 1px solid rgba(244,161,22,0.3);
+    color: var(--saffron); padding: 8px 20px;
+    border-radius: 20px; font-size: 0.8rem;
+    cursor: none; transition: all 0.3s;
+  }
+  .recipe-btn:hover {
+    background: var(--saffron); color: var(--warm-black);
+  }
+  .spice-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(192,57,43,0.15);
+    border: 1px solid rgba(192,57,43,0.3);
+    color: #e07060; font-size: 0.7rem; padding: 3px 10px;
+    border-radius: 10px; margin-bottom: 12px;
+  }
+
+  /* TESTIMONIALS */
+  #testimonials { padding: 100px 48px; background: var(--surface); max-width: 100%; }
+  .testi-inner { max-width: 1400px; margin: 0 auto; }
+  .testi-track-wrap { overflow: hidden; margin-top: 60px; }
+  .testi-track {
+    display: flex; gap: 24px;
+    animation: testiScroll 30s linear infinite;
+    width: max-content;
+  }
+  @keyframes testiScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .testi-track:hover { animation-play-state: paused; }
+  .testi-card {
+    width: 360px; flex-shrink: 0;
+    background: var(--surface2);
+    border: 1px solid rgba(244,161,22,0.1);
+    border-radius: 20px; padding: 28px;
+  }
+  .testi-stars { color: var(--saffron); font-size: 0.9rem; margin-bottom: 14px; }
+  .testi-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-style: italic;
+    line-height: 1.7; color: var(--text-primary);
+    margin-bottom: 20px;
+  }
+  .testi-profile { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--saffron), var(--deep-red));
+    flex-shrink: 0;
+  }
+  .testi-name { font-weight: 600; font-size: 0.9rem; }
+  .testi-handle { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* SOCIAL */
+  #social { padding: 100px 48px; }
+  .social-header { text-align: center; margin-bottom: 48px; }
+  .insta-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px; margin-bottom: 40px;
+  }
+  .insta-cell {
+    aspect-ratio: 1;
+    background: var(--surface);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+    cursor: none; overflow: hidden;
+    position: relative; transition: transform 0.3s;
+    border: 1px solid rgba(244,161,22,0.08);
+  }
+  .insta-cell:hover { transform: scale(1.05); z-index: 2; }
+  .insta-cell:hover .insta-hover { opacity: 1; }
+  .insta-hover {
+    position: absolute; inset: 0;
+    background: rgba(244,161,22,0.2);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+    font-size: 1.2rem;
+  }
+  .hashtag-section { text-align: center; }
+  .hashtag {
+    display: inline-block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--saffron);
+    margin: 0 16px; font-style: italic;
+    transition: color 0.3s;
+  }
+  .hashtag:hover { color: var(--turmeric); }
+
+  /* FOOTER */
+  footer {
+    background: #070503;
+    border-top: 1px solid rgba(244,161,22,0.1);
+    padding: 80px 48px 40px;
+  }
+  .footer-inner { max-width: 1400px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 60px;
+  }
+  .footer-brand { }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; color: var(--saffron);
+    margin-bottom: 16px; display: block;
+  }
+  .footer-logo span { color: var(--cream); }
+  .footer-tagline { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 24px; }
+  .newsletter-form { display: flex; gap: 10px; }
+  .newsletter-input {
+    flex: 1; background: var(--surface2);
+    border: 1px solid rgba(244,161,22,0.2);
+    color: var(--text-primary); padding: 12px 16px;
+    border-radius: 24px; font-size: 0.875rem;
+    outline: none; transition: border-color 0.3s;
+  }
+  .newsletter-input:focus { border-color: var(--saffron); }
+  .newsletter-input::placeholder { color: var(--text-muted); }
+  .newsletter-btn {
+    background: var(--saffron); color: var(--warm-black);
+    border: none; padding: 12px 20px; border-radius: 24px;
+    font-weight: 700; font-size: 0.8rem; cursor: none;
+    transition: all 0.3s; white-space: nowrap;
+  }
+  .newsletter-btn:hover { background: var(--turmeric); transform: translateY(-2px); }
+  .footer-col h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 20px; color: var(--text-primary);
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.875rem; transition: color 0.3s;
+  }
+  .footer-col ul li a:hover { color: var(--saffron); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-copy { font-size: 0.8rem; color: var(--text-muted); }
+  .social-links { display: flex; gap: 12px; }
+  .social-link {
+    width: 38px; height: 38px;
+    background: var(--surface2);
+    border: 1px solid rgba(244,161,22,0.1);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 1rem;
+    transition: all 0.3s; cursor: none;
+  }
+  .social-link:hover {
+    background: var(--saffron); border-color: var(--saffron);
+    transform: translateY(-3px);
+  }
+  .sustain-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.75rem; color: var(--cardamom);
+    background: rgba(74,124,89,0.1);
+    border: 1px solid rgba(74,124,89,0.2);
+    padding: 4px 12px; border-radius: 12px;
+    margin-top: 16px;
+  }
+
+  /* DIVIDER */
+  .spice-divider {
+    text-align: center; padding: 20px 0;
+    opacity: 0.3; font-size: 1.5rem;
+    letter-spacing: 20px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .hero-content { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .hero-right { display: none; }
+    .story-grid { grid-template-columns: 1fr; gap: 40px; }
+    .exp-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    #story { padding: 80px 40px; margin: 0 12px; }
+  }
+  @media (max-width: 768px) {
+    .insta-grid { grid-template-columns: repeat(3, 1fr); }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    .hero-stats { justify-content: center; }
+    .hero-btns { justify-content: center; }
+    .products-header { flex-direction: column; gap: 16px; }
+    #story { padding: 60px 24px; margin: 0 8px; }
+  }
+
+  /* COLOR GRADIENTS for region cards */
+  .r1 { background: linear-gradient(135deg, rgba(244,161,22,0.15), rgba(232,184,75,0.08)); }
+  .r2 { background: linear-gradient(135deg, rgba(192,57,43,0.15), rgba(224,92,21,0.08)); }
+  .r3 { background: linear-gradient(135deg, rgba(139,69,19,0.2), rgba(244,161,22,0.08)); }
+  .r4 { background: linear-gradient(135deg, rgba(74,124,89,0.15), rgba(244,161,22,0.08)); }
+  .r5 { background: linear-gradient(135deg, rgba(244,161,22,0.1), rgba(192,57,43,0.12)); }
+  .r6 { background: linear-gradient(135deg, rgba(224,92,21,0.15), rgba(192,57,43,0.1)); }
+  .r7 { background: linear-gradient(135deg, rgba(74,124,89,0.2), rgba(26,20,16,0.5)); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--warm-black); }
+  ::-webkit-scrollbar-thumb { background: var(--saffron); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-spices">
+    <span class="loader-spice">🌶️</span>
+    <span class="loader-spice">🧄</span>
+    <span class="loader-spice">🌿</span>
+    <span class="loader-spice">⭐</span>
+  </div>
+  <div class="loader-text">Spice Crowd</div>
+  <div class="loader-sub">Preparing the masala…</div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Spice<span>Crowd</span></a>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#regions">Regions</a></li>
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#recipes">Recipes</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle">☀ Light</button>
+    <button class="nav-cart">🛒 Cart (0)</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-texture"></div>
+  <div class="floating-spices" id="floatingSpices"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-tag">🌶️ Est. 2024 · Handcrafted Spices</div>
+      <h1 class="hero-title">
+        From Indian <span class="accent">Streets</span>
+        <span class="line2">to Your Plate</span>
+      </h1>
+      <p class="hero-sub">Authentic flavors. Handcrafted spice blends. Real Indian soul — bottled straight from the heart of India's most vibrant food markets.</p>
+      <div class="hero-btns">
+        <button class="btn-primary">Explore Collection</button>
+        <button class="btn-secondary">Shop Now →</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">47+</div>
+          <div class="stat-label">Spice Blends</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">12</div>
+          <div class="stat-label">Indian Regions</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Happy Homes</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <div class="hero-orbits" id="heroOrbits"></div>
+        <span class="hero-center-emoji">🫙</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- BRAND STORY -->
+<section id="story" class="reveal">
+  <div>
+    <span class="section-label">Our Heritage</span>
+    <h2 class="section-title">Spices with a<br><em style="color:var(--saffron)">Story to Tell</em></h2>
+  </div>
+  <div class="story-grid">
+    <div class="story-left">
+      <div class="story-cards">
+        <div class="story-card reveal">
+          <div class="story-card-icon">🪨</div>
+          <h4>Stone-Ground Masalas</h4>
+          <p>Every blend ground on traditional grinding stones, preserving essential oils and authentic aroma.</p>
+        </div>
+        <div class="story-card reveal">
+          <div class="story-card-icon">🌿</div>
+          <h4>Preservative-Free</h4>
+          <p>Nothing artificial. Ever. Pure spices, pure intent, pure flavor — just as nature intended.</p>
+        </div>
+        <div class="story-card reveal">
+          <div class="story-card-icon">📦</div>
+          <h4>Small-Batch Production</h4>
+          <p>Crafted in limited batches to ensure peak freshness and uncompromising quality control.</p>
+        </div>
+        <div class="story-card reveal">
+          <div class="story-card-icon">🗺️</div>
+          <h4>Regional Recipes</h4>
+          <p>Sourced directly from local farmers across 12 distinct Indian states and culinary regions.</p>
+        </div>
+      </div>
+    </div>
+    <div class="story-right reveal">
+      <blockquote class="story-quote">
+        Every pinch carries the memory of a grandmother's kitchen, a street-side stall, a festival evening.
+      </blockquote>
+      <p class="story-text">We started Spice Crowd with one simple belief: the soul of Indian cooking lies not in recipes, but in the spices. Before the chef, there is the masala. Before the masala, there is the craft.</p>
+      <p class="story-text">Our team travels across India — from the pepper estates of Kerala to the saffron fields of Kashmir — hand-selecting ingredients that meet our exacting standards for flavor, origin, and purity.</p>
+      <div class="story-badges">
+        <span class="badge">🌱 Ethically Sourced</span>
+        <span class="badge">👨‍🍳 Chef-Crafted</span>
+        <span class="badge">🏆 Award-Winning</span>
+        <span class="badge">🚫 No Additives</span>
+        <span class="badge">🇮🇳 Made in India</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="spice-divider">✦ ✦ ✦</div>
+
+<!-- REGIONS -->
+<section id="regions">
+  <div class="regions-header reveal">
+    <span class="section-label">A Culinary Journey</span>
+    <h2 class="section-title">Flavors of <em style="color:var(--saffron)">Every Region</em></h2>
+    <p class="section-sub">From the chaats of Delhi to the pepper gardens of Kerala — India's culinary geography is our spice map.</p>
+  </div>
+  <div class="regions-grid">
+    <div class="region-card reveal">
+      <div class="region-banner r1">
+        <span class="region-banner-emoji">🍢</span>
+        <div class="region-overlay" style="background:rgba(244,161,22,0.9)">
+          <p>Crispy, tangy, chaotic — Delhi street food is a festival in your mouth with every single bite.</p>
+        </div>
+      </div>
+      <div class="region-body">
+        <div class="region-city">New Delhi</div>
+        <div class="region-name">Delhi Street Chaat</div>
+        <div class="region-desc">Tamarind, coriander, and amchur — the holy trinity of chaat masala that defines North India's street culture.</div>
+        <div class="region-tags"><span class="region-tag">Tangy</span><span class="region-tag">Bold</span><span class="region-tag">Tamarind</span></div>
+      </div>
+    </div>
+    <div class="region-card reveal">
+      <div class="region-banner r2">
+        <span class="region-banner-emoji">🍲</span>
+        <div class="region-overlay" style="background:rgba(192,57,43,0.9)">
+          <p>A buttery, aromatic concoction born on Mumbai's streets — the iconic bhaji that launched a thousand food memories.</p>
+        </div>
+      </div>
+      <div class="region-body">
+        <div class="region-city">Mumbai, Maharashtra</div>
+        <div class="region-name">Mumbai Pav Bhaji</div>
+        <div class="region-desc">Rich butter-kissed vegetable mash with a signature masala blend that carries the spirit of Bombay's chaotic beauty.</div>
+        <div class="region-tags"><span class="region-tag">Buttery</span><span class="region-tag">Rich</span><span class="region-tag">Tomato</span></div>
+      </div>
+    </div>
+    <div class="region-card reveal">
+      <div class="region-banner r3">
+        <span class="region-banner-emoji">🫓</span>
+        <div class="region-overlay" style="background:rgba(139,69,19,0.9)">
+          <p>Baked in a tandoor, stuffed with spiced paneer or potatoes — Amritsari kulcha is Punjabi soul food at its finest.</p>
+        </div>
+      </div>
+      <div class="region-body">
+        <div class="region-city">Amritsar, Punjab</div>
+        <div class="region-name">Amritsari Kulcha</div>
+        <div class="region-desc">Tandoor-fired flatbread masala with carom seeds, dried pomegranate, and the warmth of Punjabi spice tradition.</div>
+        <div class="region-tags"><span class="region-tag">Tandoor</span><span class="region-tag">Ajwain</span><span class="region-tag">Hearty</span></div>
+      </div>
+    </div>
+    <div class="region-card reveal">
+      <div class="region-banner r4">
+        <span class="region-banner-emoji">🫘</span>
+        <div class="region-overlay" style="background:rgba(74,124,89,0.9)">
+          <p>On the ghats of Varanasi, matar chaat is eaten at sunrise, evening aarti, and every moment in between.</p>
+        </div>
+      </div>
+      <div class="region-body">
+        <div class="region-city">Varanasi, UP</div>
+        <div class="region-name">Banarasi Matar Chaat</div>
+        <div class="region-desc">Spiced green peas with a soulful blend of black salt, ginger, and secret Banarasi spice ratios.</div>
+        <div class="region-tags"><span class="region-tag">Earthy</span><span class="region-tag">Black Salt</span><span class="region-tag">Ginger</span></div>
+      </div>
+    </div>
+    <div class="region-card reveal">
+      <div class="region-banner r5">
+        <span class="region-banner-emoji">🍚</span>
+        <div class="region-overlay" style="background:rgba(224,92,21,0.9)">
+          <p>The pride of Indore's breakfast culture — flattened rice with mustard, turmeric, and the zest of Malwa spices.</p>
+        </div>
+      </div>
+      <div class="region-body">
+        <div class="region-city">Indore, Madhya Pradesh</div>
+        <div class="region-name">Indori Poha</div>
+        <div class="region-desc">Flattened rice masala kissed with fennel, mustard, and the signature brightness of Indore street kitchens.</div>
+        <div class="region-tags"><span class="region-tag">Fennel</span><span class="region-tag">Mustard</span><span class="region-tag">Turmeric</span></div>
+      </div>
+    </div>
+    <div class="region-card reveal">
+      <div class="region-banner r6">
+        <span class="region-banner-emoji">🍛</span>
+        <div class="region-overlay" style="background:rgba(192,57,43,0.9)">
+          <p>Layers of aromatic rice, saffron, and slow-cooked spice — Hyderabadi Biryani is not just food, it's ceremony.</p>
+        </div>
+      </div>
+      <div class="region-body">
+        <div class="region-city">Hyderabad, Telangana</div>
+        <div class="region-name">Hyderabadi Biryani</div>
+        <div class="region-desc">The crown jewel of Indian cuisine — our Biryani masala carries saffron, star anise, rose petals and 23 whole spices.</div>
+        <div class="region-tags"><span class="region-tag">Saffron</span><span class="region-tag">Slow-Cook</span><span class="region-tag">Aromatic</span></div>
+      </div>
+    </div>
+    <div class="region-card reveal">
+      <div class="region-banner r7">
+        <span class="region-banner-emoji">🫚</span>
+        <div class="region-overlay" style="background:rgba(26,60,40,0.9)">
+          <p>Where the Western Ghats meet the sea — Kerala's spice gardens gave the world its first precious trade routes.</p>
+        </div>
+      </div>
+      <div class="region-body">
+        <div class="region-city">Wayanad, Kerala</div>
+        <div class="region-name">Kerala Pepper & Cardamom</div>
+        <div class="region-desc">The original treasures of the Spice Coast — whole peppercorns and green cardamom from misty mountain estates.</div>
+        <div class="region-tags"><span class="region-tag">Black Pepper</span><span class="region-tag">Cardamom</span><span class="region-tag">Coastal</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<div id="products" style="background:var(--surface); padding: 100px 0;">
+  <div class="products-inner" style="padding: 0 48px;">
+    <div class="products-header reveal">
+      <div>
+        <span class="section-label">Our Collection</span>
+        <h2 class="section-title">Handcrafted <em style="color:var(--saffron)">Spice Blends</em></h2>
+      </div>
+      <button class="btn-secondary">View All Products</button>
+    </div>
+    <div class="products-grid">
+      <div class="product-card reveal">
+        <span class="product-badge">Bestseller</span>
+        <div class="product-img">
+          <span class="product-img-emoji">🌶️</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Street Food Masala</div>
+          <div class="product-name">Chaat Masala Supreme</div>
+          <div class="product-desc">Our most beloved blend — tangy, sharp, and alive with tamarind and black salt.</div>
+          <div class="product-meta">
+            <div class="heat-meter">
+              <div class="heat-dot active"></div>
+              <div class="heat-dot active"></div>
+              <div class="heat-dot active"></div>
+              <div class="heat-dot"></div>
+              <div class="heat-dot"></div>
+            </div>
+            <div class="stars">★★★★★</div>
+          </div>
+          <div class="product-footer">
+            <span class="product-price">₹ 249</span>
+            <button class="add-cart">+ Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal">
+        <div class="product-img">
+          <span class="product-img-emoji">🫙</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Whole Spices</div>
+          <div class="product-name">Kashmiri Saffron</div>
+          <div class="product-desc">Grade-A Mongra saffron from the valleys of Pampore, handpicked at peak bloom.</div>
+          <div class="product-meta">
+            <div class="heat-meter">
+              <div class="heat-dot active"></div>
+              <div class="heat-dot"></div>
+              <div class="heat-dot"></div>
+              <div class="heat-dot"></div>
+              <div class="heat-dot"></div>
+            </div>
+            <div class="stars">★★★★★</div>
+          </div>
+          <div class="product-footer">
+            <span class="product-price">₹ 899</span>
+            <button class="add-cart">+ Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal">
+        <span class="product-badge" style="background:var(--cardamom)">New</span>
+        <div class="product-img">
+          <span class="product-img-emoji">🍛</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Biryani Blends</div>
+          <div class="product-name">Hyderabadi Biryani Kit</div>
+          <div class="product-desc">23 whole spices + saffron strands + rose petals in a single ceremonial kit.</div>
+          <div class="product-meta">
+            <div class="heat-meter">
+              <div class="heat-dot active"></div>
+              <div class="heat-dot active"></div>
+              <div class="heat-dot active"></div>
+              <div class="heat-dot active"></div>
+              <div class="heat-dot"></div>
+            </div>
+            <div class="stars">★★★★☆</div>
+          </div>
+          <div class="product-footer">
+            <span class="product-price">₹ 549</span>
+            <button class="add-cart">+ Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal">
+        <div class="product-img">
+          <span class="product-img-emoji">🫚</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Premium Whole Spices</div>
+          <div class="product-name">Kerala Black Pepper</div>
+          <div class="product-desc">Tellicherry grade peppercorns — bold, floral, and intensely aromatic from Kerala's Malabar coast.</div>
+          <div class="product-meta">
+            <div class="heat-meter">
+              <div class="heat-dot active"></div>
+              <div class="heat-dot active"></div>
+              <div class="heat-dot active"></div>
+              <div class="heat-dot active"></div>
+              <div class="heat-dot active"></div>
+            </div>
+            <div class="stars">★★★★★</div>
+          </div>
+          <div class="product-footer">
+            <span class="product-price">₹ 349</span>
+            <button class="add-cart">+ Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY SPICE CROWD -->
+<section id="why">
+  <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto 0;">
+    <span class="section-label">Why We're Different</span>
+    <h2 class="section-title">The Spice Crowd <em style="color:var(--saffron)">Promise</em></h2>
+    <p class="section-sub">Six commitments we make with every jar, every blend, every order.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon">🏆</div>
+      <div class="why-title">100% Authentic Spices</div>
+      <div class="why-text">Every ingredient verified at source. We trace every spice back to its farm, region, and harvest season.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🪨</div>
+      <div class="why-title">Stone-Ground Blends</div>
+      <div class="why-text">Traditional chakki-ground masalas retain essential oils and aroma lost in machine grinding.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🚫</div>
+      <div class="why-title">No Artificial Colors</div>
+      <div class="why-text">The vibrant reds and yellows in our spices come from nature — not from a chemical lab.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🌿</div>
+      <div class="why-title">Preservative-Free</div>
+      <div class="why-text">Sealed at peak freshness with nitrogen-flush packaging that locks in flavor naturally.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🤝</div>
+      <div class="why-title">Ethically Sourced</div>
+      <div class="why-text">Fair trade partnerships with 200+ small farmers across India's major spice-growing regions.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">👨‍🍳</div>
+      <div class="why-title">Chef-Crafted Recipes</div>
+      <div class="why-text">Every blend developed and tested by our team of Michelin-experienced Indian culinary chefs.</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<div id="experience" style="max-width:100%;">
+  <div class="exp-particles" id="expParticles"></div>
+  <div class="exp-inner">
+    <div class="reveal">
+      <span class="section-label">The Bazaar Experience</span>
+      <h2 class="section-title">Step Into the<br><em style="color:var(--saffron)">Spice Market</em></h2>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-visual reveal">
+        <div class="exp-glow" style="width:300px;height:300px;background:radial-gradient(circle,rgba(244,161,22,0.4),transparent);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+        <div class="exp-bazaar">
+          <span class="exp-bazaar-emoji">🏪</span>
+          <div class="exp-bazaar-text">India's oldest markets<br>in your kitchen drawer</div>
+        </div>
+      </div>
+      <div class="exp-features">
+        <div class="exp-feature reveal">
+          <span class="exp-feature-icon">🌅</span>
+          <div>
+            <h4>Morning Harvest Freshness</h4>
+            <p>Spices processed within 24 hours of harvest, capturing the volatile aromatic compounds at their absolute peak concentration.</p>
+          </div>
+        </div>
+        <div class="exp-feature reveal">
+          <span class="exp-feature-icon">⚗️</span>
+          <div>
+            <h4>Traditional Blending Techniques</h4>
+            <p>Our masala artists use ancient ratio traditions passed down through generations of Indian spice merchants from Kochi to Kannauj.</p>
+          </div>
+        </div>
+        <div class="exp-feature reveal">
+          <span class="exp-feature-icon">🧪</span>
+          <div>
+            <h4>Lab-Verified Purity</h4>
+            <p>Every batch tested for adulteration, pesticides, and heavy metals at NABL-accredited laboratories before packaging.</p>
+          </div>
+        </div>
+        <div class="exp-feature reveal">
+          <span class="exp-feature-icon">📦</span>
+          <div>
+            <h4>Freshness-Lock Packaging</h4>
+            <p>Nitrogen-flushed, light-blocking pouches that maintain potency for up to 18 months without any preservatives.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RECIPES -->
+<section id="recipes">
+  <div class="reveal" style="text-align:center; max-width:600px; margin: 0 auto;">
+    <span class="section-label">Get Inspired</span>
+    <h2 class="section-title">Cook with <em style="color:var(--saffron)">Spice Crowd</em></h2>
+    <p class="section-sub">Classic recipes reimagined with our artisanal blends. Each one tells a story.</p>
+  </div>
+  <div class="recipes-grid">
+    <div class="recipe-card reveal">
+      <div class="recipe-img" style="background:linear-gradient(135deg,rgba(192,57,43,0.2),rgba(244,161,22,0.1))">
+        <span>🍗</span>
+      </div>
+      <div class="recipe-body">
+        <span class="spice-chip">🌶️ Medium Heat</span>
+        <div class="recipe-meta">
+          <div class="recipe-meta-item">⏱ 45 min</div>
+          <div class="recipe-meta-item">👤 Serves 4</div>
+        </div>
+        <div class="recipe-name">Butter Chicken</div>
+        <div class="recipe-desc">Creamy, smoky, and deeply aromatic — our Makhani masala transforms this classic into something extraordinary.</div>
+        <button class="recipe-btn">View Recipe</button>
+      </div>
+    </div>
+    <div class="recipe-card reveal">
+      <div class="recipe-img" style="background:linear-gradient(135deg,rgba(244,161,22,0.15),rgba(74,124,89,0.1))">
+        <span>🧀</span>
+      </div>
+      <div class="recipe-body">
+        <span class="spice-chip">🌶️🌶️ Hot</span>
+        <div class="recipe-meta">
+          <div class="recipe-meta-item">⏱ 30 min</div>
+          <div class="recipe-meta-item">👤 Serves 3</div>
+        </div>
+        <div class="recipe-name">Paneer Tikka</div>
+        <div class="recipe-desc">Charred on the outside, pillowy within — marinated overnight in our Tandoori blend with hung curd and saffron.</div>
+        <button class="recipe-btn">View Recipe</button>
+      </div>
+    </div>
+    <div class="recipe-card reveal">
+      <div class="recipe-img" style="background:linear-gradient(135deg,rgba(139,69,19,0.2),rgba(244,161,22,0.12))">
+        <span>☕</span>
+      </div>
+      <div class="recipe-body">
+        <span class="spice-chip">✨ Mild</span>
+        <div class="recipe-meta">
+          <div class="recipe-meta-item">⏱ 15 min</div>
+          <div class="recipe-meta-item">👤 Serves 2</div>
+        </div>
+        <div class="recipe-name">Masala Chai</div>
+        <div class="recipe-desc">Seven spices, one cup — ginger, cardamom, clove, cinnamon, pepper, star anise, and love.</div>
+        <button class="recipe-btn">View Recipe</button>
+      </div>
+    </div>
+    <div class="recipe-card reveal">
+      <div class="recipe-img" style="background:linear-gradient(135deg,rgba(224,92,21,0.15),rgba(232,184,75,0.1))">
+        <span>🍢</span>
+      </div>
+      <div class="recipe-body">
+        <span class="spice-chip">🌶️🌶️🌶️ Fiery</span>
+        <div class="recipe-meta">
+          <div class="recipe-meta-item">⏱ 20 min</div>
+          <div class="recipe-meta-item">👤 Serves 4</div>
+        </div>
+        <div class="recipe-name">Street-Style Chaat</div>
+        <div class="recipe-desc">The chaos of Delhi's Chandni Chowk in a bowl — crunchy, tangy, sweet, and impossibly addictive.</div>
+        <button class="recipe-btn">View Recipe</button>
+      </div>
+    </div>
+    <div class="recipe-card reveal">
+      <div class="recipe-img" style="background:linear-gradient(135deg,rgba(192,57,43,0.2),rgba(139,69,19,0.1))">
+        <span>🔥</span>
+      </div>
+      <div class="recipe-body">
+        <span class="spice-chip">🌶️🌶️ Hot</span>
+        <div class="recipe-meta">
+          <div class="recipe-meta-item">⏱ 60 min</div>
+          <div class="recipe-meta-item">👤 Serves 6</div>
+        </div>
+        <div class="recipe-name">Tandoori Delight</div>
+        <div class="recipe-desc">Wood-fired magic from our Tandoori Masala — bright red, gloriously smoky, unmistakably Indian.</div>
+        <button class="recipe-btn">View Recipe</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div id="testimonials" style="padding:100px 0;">
+  <div class="testi-inner">
+    <div class="reveal" style="text-align:center; max-width:500px; margin:0 auto; padding:0 48px 60px;">
+      <span class="section-label">Voices of Flavor</span>
+      <h2 class="section-title">What People <em style="color:var(--saffron)">Say</em></h2>
+    </div>
+    <div class="testi-track-wrap">
+      <div class="testi-track" id="testiTrack"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SOCIAL / INSTAGRAM -->
+<section id="social">
+  <div class="social-header reveal">
+    <span class="section-label">Follow the Feast</span>
+    <h2 class="section-title">Our <em style="color:var(--saffron)">Spice Gallery</em></h2>
+  </div>
+  <div class="insta-grid" id="instaGrid"></div>
+  <div class="hashtag-section reveal">
+    <span class="hashtag">#SpiceCrowd</span>
+    <span class="hashtag">#TasteIndia</span>
+    <span class="hashtag">#AuthenticMasala</span>
+    <span class="hashtag">#StreetFoodLove</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">Spice<span>Crowd</span></span>
+        <p class="footer-tagline">Bringing the authentic flavors of India's most vibrant spice markets directly to your kitchen — one handcrafted blend at a time.</p>
+        <div class="newsletter-form">
+          <input type="email" class="newsletter-input" placeholder="Your email address">
+          <button class="newsletter-btn">Subscribe</button>
+        </div>
+        <div class="sustain-badge">🌱 Carbon-neutral shipping by 2025</div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="#">Spice Blends</a></li>
+          <li><a href="#">Ready Mixes</a></li>
+          <li><a href="#">Whole Spices</a></li>
+          <li><a href="#">Gift Sets</a></li>
+          <li><a href="#">Subscriptions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Learn</h5>
+        <ul>
+          <li><a href="#">Recipes</a></li>
+          <li><a href="#">Spice Guide</a></li>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Sourcing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2024 Spice Crowd. All rights reserved. Made with ❤️ in India.</div>
+      <div class="social-links">
+        <a href="#" class="social-link">📸</a>
+        <a href="#" class="social-link">🐦</a>
+        <a href="#" class="social-link">▶️</a>
+        <a href="#" class="social-link">📌</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const trail = document.getElementById('cursorTrail');
+  let mx=0,my=0,tx=0,ty=0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+  function animateTrail() {
+    tx += (mx - tx) * 0.12;
+    ty += (my - ty) * 0.12;
+    trail.style.left = tx + 'px'; trail.style.top = ty + 'px';
+    requestAnimationFrame(animateTrail);
+  }
+  animateTrail();
+  document.querySelectorAll('button, a, .product-card, .region-card, .recipe-card, .why-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '30px'; cursor.style.height = '30px';
+      trail.style.width = '60px'; trail.style.height = '60px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '18px'; cursor.style.height = '18px';
+      trail.style.width = '40px'; trail.style.height = '40px';
+    });
+  });
+
+  // LOADER
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1800);
+  });
+
+  // NAV SCROLL
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // THEME TOGGLE
+  const themeBtn = document.getElementById('themeToggle');
+  themeBtn.addEventListener('click', () => {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    themeBtn.textContent = isDark ? '🌙 Dark' : '☀ Light';
+  });
+
+  // FLOATING SPICES IN HERO
+  const spiceEmojis = ['🌶️','🧄','🫚','⭐','🌿','🍃','🫙','🌰','🫘','🔴'];
+  const floatContainer = document.getElementById('floatingSpices');
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('span');
+    s.className = 'fs';
+    s.textContent = spiceEmojis[Math.floor(Math.random() * spiceEmojis.length)];
+    s.style.left = Math.random() * 100 + '%';
+    s.style.animationDuration = (8 + Math.random() * 12) + 's';
+    s.style.animationDelay = (Math.random() * 12) + 's';
+    s.style.fontSize = (0.8 + Math.random() * 1.5) + 'rem';
+    floatContainer.appendChild(s);
+  }
+
+  // HERO ORBIT ITEMS
+  const orbitEmojis = ['🌶️','🧄','⭐','🌿','🫘','🌰'];
+  const orbitsContainer = document.getElementById('heroOrbits');
+  orbitEmojis.forEach((e, i) => {
+    const el = document.createElement('span');
+    el.className = 'orbit-item';
+    const angle = (i / orbitEmojis.length) * 360;
+    const radius = 130 + (i % 2) * 30;
+    el.style.cssText = `--start:${angle}deg; --r:${radius}px; top:50%; left:50%; animation-duration:${8 + i * 1.5}s; animation-direction:${i%2?'reverse':'normal'}`;
+    el.textContent = e;
+    orbitsContainer.appendChild(el);
+  });
+
+  // MARQUEE
+  const marqueeItems = ['🌶️ Chaat Masala', '✦', '🫙 Biryani Spice', '✦', '🧄 Tandoori Blend', '✦', '⭐ Kashmiri Saffron', '✦', '🌿 Chai Masala', '✦', '🫚 Garam Masala', '✦', '🌰 Cinnamon & Clove', '✦'];
+  const marqueeTrack = document.getElementById('marqueeTrack');
+  const doubled = [...marqueeItems, ...marqueeItems];
+  doubled.forEach(t => {
+    const s = document.createElement('span');
+    s.className = t === '✦' ? 'dot' : '';
+    s.textContent = t;
+    marqueeTrack.appendChild(s);
+  });
+
+  // EXPERIENCE PARTICLES
+  const expContainer = document.getElementById('expParticles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('span');
+    p.className = 'exp-particle';
+    p.textContent = spiceEmojis[Math.floor(Math.random() * spiceEmojis.length)];
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (10 + Math.random() * 15) + 's';
+    p.style.animationDelay = (Math.random() * 15) + 's';
+    expContainer.appendChild(p);
+  }
+
+  // TESTIMONIALS
+  const testimonials = [
+    { name: 'Priya Sharma', handle: '@priyacooks', text: 'I have tried many spice brands but Spice Crowd is something else entirely. The Biryani masala transported me back to Hyderabad in one bite.', stars: 5, emoji: '👩' },
+    { name: 'Rahul Mehta', handle: '@foodierahul', text: 'The Chaat Masala is dangerously addictive. I put it on everything now. My friends think I have become a professional chef overnight.', stars: 5, emoji: '👨' },
+    { name: 'Ananya Krishnan', handle: '@ananyaeats', text: 'Kerala Black Pepper is extraordinary. The fragrance alone is worth every rupee. Nothing from a supermarket comes close.', stars: 5, emoji: '👩🏾' },
+    { name: 'Vikram Nair', handle: '@vikramfoodlover', text: 'I gifted the Regional Sampler to my mother and she cried. Said it reminded her of her childhood market visits in Varanasi.', stars: 5, emoji: '🧔' },
+    { name: 'Sonal Gupta', handle: '@sonalkitchen', text: 'Ordered the Masala Chai blend on a whim and now it is the only tea I drink. The cardamom ratio is simply perfect.', stars: 5, emoji: '👩🏽' },
+    { name: 'Arjun Das', handle: '@arjunfoodie', text: 'Stone-ground difference is real. You can smell it the moment you open the jar. Absolutely incredible quality.', stars: 5, emoji: '🧑' },
+  ];
+  const testiTrack = document.getElementById('testiTrack');
+  [...testimonials, ...testimonials].forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'testi-card';
+    card.innerHTML = `
+      <div class="testi-stars">${'★'.repeat(t.stars)}</div>
+      <p class="testi-text">"${t.text}"</p>
+      <div class="testi-profile">
+        <div class="testi-avatar">${t.emoji}</div>
+        <div><div class="testi-name">${t.name}</div><div class="testi-handle">${t.handle}</div></div>
+      </div>`;
+    testiTrack.appendChild(card);
+  });
+
+  // INSTAGRAM GRID
+  const instaEmojis = ['🍛','🌶️','🫙','🍢','☕','🫚','🍗','🧄','🍚','🫘','⭐','🌿','🔥','🍲','🧀','🫓','🍜','🌰'];
+  const instaGrid = document.getElementById('instaGrid');
+  instaEmojis.forEach((e, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'insta-cell';
+    cell.innerHTML = `${e}<div class="insta-hover">❤️</div>`;
+    cell.style.background = `radial-gradient(circle at ${30+Math.random()*40}% ${30+Math.random()*40}%, rgba(244,161,22,0.12), rgba(26,20,16,0.8))`;
+    instaGrid.appendChild(cell);
+  });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // ADD TO CART interaction
+  document.querySelectorAll('.add-cart').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const orig = this.textContent;
+      this.textContent = '✓ Added!';
+      this.style.background = 'var(--cardamom)';
+      setTimeout(() => {
+        this.textContent = orig;
+        this.style.background = '';
+      }, 1500);
+    });
+  });
+</script>
+</body>
+</html>
