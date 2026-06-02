@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Products — Spice Crowd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #F4A116;
+    --deep-red: #C0392B;
+    --turmeric: #E8B84B;
+    --cinnamon: #8B4513;
+    --charcoal: #1A1410;
+    --cream: #FAF3E8;
+    --warm-black: #0D0A07;
+    --spice-orange: #E05C15;
+    --cardamom: #4A7C59;
+    --text-primary: #FAF3E8;
+    --text-muted: #A89880;
+    --surface: #1E1610;
+    --surface2: #261C14;
+  }
+  [data-theme="light"] {
+    --text-primary: #1A1410;
+    --text-muted: #6B5744;
+    --surface: #FAF3E8;
+    --surface2: #F0E6D3;
+    --charcoal: #FAF3E8;
+    --warm-black: #FAF3E8;
+    --cream: #1A1410;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-black);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--saffron);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-trail {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--saffron);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0.5;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* LOADING SCREEN */
+  .loader {
+    position: fixed; inset: 0; z-index: 99999;
+    background: var(--warm-black);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
+  }
+  .loader.hidden { opacity: 0; visibility: hidden; }
+  .loader-spices { display: flex; gap: 12px; margin-bottom: 24px; }
+  .loader-spice {
+    font-size: 2rem;
+    animation: floatLoader 1.2s ease-in-out infinite;
+  }
+  .loader-spice:nth-child(1) { animation-delay: 0s; }
+  .loader-spice:nth-child(2) { animation-delay: 0.2s; }
+  .loader-spice:nth-child(3) { animation-delay: 0.4s; }
+  .loader-spice:nth-child(4) { animation-delay: 0.6s; }
+  @keyframes floatLoader {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+    50% { transform: translateY(-16px) rotate(15deg); opacity: 1; }
+  }
+  .loader-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--saffron);
+    letter-spacing: 0.15em;
+  }
+  .loader-sub {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 8px;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, backdrop-filter 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(13,10,7,0.85);
+    backdrop-filter: blur(20px);
+    padding: 14px 48px;
+    border-bottom: 1px solid rgba(244,161,22,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--saffron); text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .nav-logo span { color: var(--cream); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.875rem; letter-spacing: 0.12em;
+    text-transform: uppercase; transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--saffron);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-links a.active { color: var(--saffron); }
+  .nav-links a.active::after { width: 100%; }
+  .nav-actions { display: flex; align-items: center; gap: 16px; }
+  .theme-toggle {
+    background: none; border: 1px solid rgba(244,161,22,0.3);
+    color: var(--saffron); padding: 6px 14px; border-radius: 20px;
+    cursor: none; font-size: 0.8rem; letter-spacing: 0.1em;
+    transition: all 0.3s;
+  }
+  .theme-toggle:hover { background: var(--saffron); color: var(--warm-black); }
+  .nav-cart {
+    background: var(--saffron); color: var(--warm-black);
+    border: none; padding: 10px 20px; border-radius: 24px;
+    font-weight: 600; font-size: 0.875rem; cursor: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .nav-cart:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(244,161,22,0.4); }
+  .back-home-btn {
+    position: fixed; top: 100px; left: 48px; z-index: 900;
+    background: var(--saffron); color: var(--warm-black);
+    border: none; padding: 12px 24px; border-radius: 24px;
+    font-weight: 700; font-size: 0.85rem; cursor: none;
+    transition: all 0.3s; letter-spacing: 0.05em;
+    font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .back-home-btn:hover { background: var(--turmeric); transform: translateX(-4px); }
+  @media (max-width: 900px) {
+    .back-home-btn { position: relative; top: auto; left: auto; margin-bottom: 24px; }
+  }
+
+  /* MARQUEE */
+  .marquee-bar {
+    background: var(--saffron);
+    padding: 14px 0; overflow: hidden;
+    display: flex;
+  }
+  .marquee-track {
+    display: flex; gap: 0;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-track span {
+    color: var(--warm-black);
+    font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0 32px;
+  }
+  .marquee-track span.dot { color: var(--cinnamon); font-size: 1rem; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* HERO PAGE BANNER */
+  .page-hero {
+    min-height: 52vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    background: var(--warm-black);
+    padding: 140px 48px 80px;
+    text-align: center;
+  }
+  .page-hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 60%, rgba(244,161,22,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 20%, rgba(192,57,43,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 80% 80%, rgba(139,69,19,0.1) 0%, transparent 60%);
+  }
+  .page-hero-texture {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F4A116' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .floating-spices { position: absolute; inset: 0; pointer-events: none; }
+  .fs {
+    position: absolute; font-size: 1.5rem; opacity: 0.15;
+    animation: floatAround linear infinite;
+  }
+  @keyframes floatAround {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.15; }
+    90% { opacity: 0.15; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+  .page-hero-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(244,161,22,0.12);
+    border: 1px solid rgba(244,161,22,0.3);
+    color: var(--saffron); padding: 6px 16px; border-radius: 20px;
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.8s ease both;
+  }
+  .page-hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.08;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.8s ease 0.15s both;
+  }
+  .page-hero-title .accent { color: var(--saffron); font-style: italic; }
+  .page-hero-sub {
+    color: var(--text-muted); font-size: 1.1rem;
+    line-height: 1.7; margin-bottom: 0;
+    animation: fadeInUp 0.8s ease 0.3s both;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* SECTION COMMON */
+  .section-label {
+    font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 16px; display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 1.05rem; line-height: 1.7;
+    max-width: 580px;
+  }
+
+  /* FILTER BAR */
+  .filter-bar {
+    max-width: 1400px; margin: 0 auto;
+    padding: 48px 48px 0;
+    display: flex; gap: 12px; flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-muted); margin-right: 8px;
+  }
+  .filter-btn {
+    background: transparent;
+    border: 1px solid rgba(244,161,22,0.2);
+    color: var(--text-muted); padding: 7px 18px; border-radius: 20px;
+    font-size: 0.8rem; cursor: none; letter-spacing: 0.08em;
+    transition: all 0.3s; font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: rgba(244,161,22,0.12);
+    border-color: var(--saffron);
+    color: var(--saffron);
+  }
+
+  /* PRODUCTS GRID SECTION */
+  .products-section {
+    max-width: 1400px; margin: 0 auto;
+    padding: 48px 48px 100px;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 28px;
+  }
+
+  /* PRODUCT CARD */
+  .product-card {
+    background: var(--surface);
+    border-radius: 24px; overflow: hidden;
+    border: 1px solid rgba(244,161,22,0.08);
+    transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
+    position: relative; cursor: none;
+  }
+  .product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 28px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(244,161,22,0.2);
+    border-color: rgba(244,161,22,0.25);
+  }
+  .product-badge {
+    position: absolute; top: 16px; left: 16px; z-index: 2;
+    background: var(--deep-red);
+    color: #fff; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 10px;
+  }
+  .product-badge.origin {
+    background: rgba(74,124,89,0.9);
+  }
+  .product-img {
+    height: 240px; display: flex; align-items: center; justify-content: center;
+    font-size: 5.5rem; position: relative;
+    overflow: hidden;
+  }
+  .product-img-emoji {
+    transition: transform 0.4s;
+    filter: drop-shadow(0 10px 24px rgba(0,0,0,0.5));
+    position: relative; z-index: 2;
+  }
+  .product-card:hover .product-img-emoji { transform: scale(1.15) translateY(-10px); }
+  .product-img-glow {
+    position: absolute; inset: 0;
+    transition: opacity 0.4s;
+    opacity: 0.6;
+  }
+  .product-card:hover .product-img-glow { opacity: 1; }
+
+  .product-info { padding: 24px; }
+  .product-category {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 8px;
+  }
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .product-desc {
+    font-size: 0.875rem; color: var(--text-muted);
+    line-height: 1.7; margin-bottom: 18px;
+  }
+  .product-origin {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.75rem; color: var(--text-muted);
+    margin-bottom: 18px;
+    padding: 8px 12px;
+    background: rgba(244,161,22,0.06);
+    border-radius: 10px;
+    border-left: 2px solid var(--saffron);
+  }
+  .product-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .product-tag {
+    background: rgba(244,161,22,0.08);
+    border: 1px solid rgba(244,161,22,0.15);
+    color: var(--text-muted);
+    font-size: 0.7rem; padding: 3px 10px; border-radius: 10px;
+    letter-spacing: 0.05em;
+  }
+  .product-footer {
+    display: flex; align-items: center;
+    gap: 12px; padding-top: 18px;
+    border-top: 1px solid rgba(244,161,22,0.1);
+  }
+  .enquire-btn {
+    flex: 1;
+    background: var(--saffron); color: var(--warm-black);
+    border: none; padding: 12px 20px; border-radius: 24px;
+    font-weight: 700; font-size: 0.85rem; cursor: none;
+    transition: all 0.3s; letter-spacing: 0.05em;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .enquire-btn:hover {
+    background: var(--turmeric);
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(244,161,22,0.4);
+  }
+  .enquire-btn.secondary {
+    background: transparent;
+    border: 1px solid rgba(244,161,22,0.3);
+    color: var(--saffron);
+    flex: none; padding: 12px 16px;
+  }
+  .enquire-btn.secondary:hover {
+    background: rgba(244,161,22,0.1);
+    border-color: var(--saffron);
+  }
+
+  /* KOLLI HILLS BANNER */
+  .origin-banner {
+    background: linear-gradient(135deg, rgba(74,124,89,0.15) 0%, rgba(244,161,22,0.08) 100%);
+    border: 1px solid rgba(74,124,89,0.3);
+    border-radius: 24px;
+    margin: 0 48px 60px;
+    max-width: calc(1400px - 96px);
+    margin-left: auto; margin-right: auto;
+    padding: 48px 60px;
+    display: flex; align-items: center; gap: 48px;
+    position: relative; overflow: hidden;
+  }
+  .origin-banner::before {
+    content: '🏔️';
+    position: absolute; right: 40px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem; opacity: 0.12;
+  }
+  .origin-icon { font-size: 3rem; flex-shrink: 0; }
+  .origin-content {}
+  .origin-label {
+    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--cardamom); margin-bottom: 10px; display: block;
+  }
+  .origin-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700; margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .origin-title span { color: var(--saffron); font-style: italic; }
+  .origin-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; max-width: 600px; }
+
+  /* TESTIMONIAL */
+  .testi-section {
+    background: var(--surface);
+    padding: 80px 48px;
+  }
+  .testi-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .testi-card-single {
+    background: var(--surface2);
+    border: 1px solid rgba(244,161,22,0.15);
+    border-radius: 24px; padding: 52px 60px;
+    position: relative; overflow: hidden;
+    margin-top: 48px;
+  }
+  .testi-card-single::before {
+    content: '"';
+    position: absolute; left: 30px; top: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem; color: rgba(244,161,22,0.08);
+    line-height: 1;
+  }
+  .testi-stars { color: var(--saffron); font-size: 1.3rem; margin-bottom: 20px; letter-spacing: 4px; }
+  .testi-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-style: italic;
+    line-height: 1.6; color: var(--text-primary);
+    margin-bottom: 32px; position: relative; z-index: 1;
+  }
+  .testi-profile { display: flex; align-items: center; gap: 16px; justify-content: center; }
+  .testi-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(244,161,22,0.15);
+    border: 2px solid rgba(244,161,22,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+  }
+  .testi-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; }
+  .testi-handle { font-size: 0.8rem; color: var(--saffron); letter-spacing: 0.05em; margin-top: 2px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid rgba(244,161,22,0.1);
+    padding: 80px 0 32px;
+  }
+  .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 60px;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900;
+    color: var(--saffron); display: block; margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .footer-logo span { color: var(--text-primary); }
+  .footer-tagline { color: var(--text-muted); font-size: 0.875rem; line-height: 1.7; margin-bottom: 24px; }
+  .newsletter-form { display: flex; gap: 8px; margin-bottom: 16px; }
+  .newsletter-input {
+    flex: 1; background: var(--surface2); border: 1px solid rgba(244,161,22,0.2);
+    color: var(--text-primary); padding: 10px 16px; border-radius: 24px;
+    font-size: 0.85rem; font-family: 'DM Sans', sans-serif;
+    outline: none; transition: border-color 0.3s;
+  }
+  .newsletter-input:focus { border-color: var(--saffron); }
+  .newsletter-btn {
+    background: var(--saffron); color: var(--warm-black);
+    border: none; padding: 10px 20px; border-radius: 24px;
+    font-weight: 700; font-size: 0.8rem; cursor: none;
+    white-space: nowrap;
+  }
+  .sustain-badge { font-size: 0.75rem; color: var(--cardamom); letter-spacing: 0.05em; }
+  .footer-col h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 20px; color: var(--text-primary);
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.875rem; transition: color 0.3s;
+  }
+  .footer-col ul li a:hover { color: var(--saffron); }
+  .footer-bottom {
+    border-top: 1px solid rgba(244,161,22,0.1);
+    padding-top: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-copy { font-size: 0.8rem; color: var(--text-muted); }
+  .social-links { display: flex; gap: 12px; }
+  .social-link {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--surface2); border: 1px solid rgba(244,161,22,0.15);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 0.875rem;
+    transition: all 0.3s; cursor: none;
+  }
+  .social-link:hover { border-color: var(--saffron); background: rgba(244,161,22,0.1); }
+
+  /* LOGO */
+  .footer-logo-badge {
+    width: 120px; height: 120px;
+    display: block; margin: 0 auto 24px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(244,161,22,0.2));
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .page-hero { padding: 120px 24px 60px; }
+    .filter-bar { padding: 32px 24px 0; }
+    .products-section { padding: 32px 24px 80px; }
+    .origin-banner { margin: 0 24px 48px; padding: 32px; flex-direction: column; gap: 24px; }
+    .testi-card-single { padding: 36px 28px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-inner { padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-spices">
+    <span class="loader-spice">🌿</span>
+    <span class="loader-spice">☕</span>
+    <span class="loader-spice">🫙</span>
+    <span class="loader-spice">🌶️</span>
+  </div>
+  <div class="loader-text">SpiceCrowd</div>
+  <div class="loader-sub">Loading our harvest…</div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Spice<span>Crowd</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html" class="active">Products</a></li>
+    <li><a href="#">Story</a></li>
+    <li><a href="#">Regions</a></li>
+    <li><a href="#">Recipes</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle">☀ Light</button>
+    <button class="nav-cart">🛒 Enquire</button>
+  </div>
+</nav>
+
+<!-- MARQUEE -->
+<div class="marquee-bar" style="margin-top:0; position:relative; z-index:2;">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-texture"></div>
+  <div class="floating-spices" id="floatingSpices"></div>
+  <div class="page-hero-content">
+    <div class="hero-tag">🌿 Sourced from Kolli Hills &amp; Across India</div>
+    <h1 class="page-hero-title">Our <span class="accent">Finest</span><br>Spice Collection</h1>
+    <p class="page-hero-sub">Every spice tells a story of terrain, tradition, and care — handpicked from India's most storied growing regions and brought directly to your kitchen.</p>
+  </div>
+</div>
+
+<!-- BACK TO HOME BUTTON -->
+<a href="index.html" style="text-decoration:none;"><button class="back-home-btn">← Back to Home</button></a>
+
+<!-- ORIGIN BANNER -->
+<div style="padding: 72px 48px 0; max-width:1400px; margin: 0 auto;">
+  <div class="origin-banner reveal">
+    <div class="origin-icon">🏔️</div>
+    <div class="origin-content">
+      <span class="origin-label">Primary Source Region</span>
+      <h3 class="origin-title">From the Heart of <span>Kolli Hills</span> & Across India</h3>
+      <p class="origin-text">Nestled in the Eastern Ghats of Tamil Nadu, Kolli Hills rises to over 1,300 metres — a lush, misty sanctuary where spices grow slowly, develop deeply, and carry the breath of the mountain in every harvest. We source our finest black pepper, coffee, cinnamon, and cloves directly from these storied estates, supplemented by regional partners across India's best spice belts.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" onclick="filterProducts('all', this)">All Products</button>
+  <button class="filter-btn" onclick="filterProducts('pepper', this)">Pepper</button>
+  <button class="filter-btn" onclick="filterProducts('coffee', this)">Coffee</button>
+  <button class="filter-btn" onclick="filterProducts('bark-leaf', this)">Bark &amp; Leaf</button>
+  <button class="filter-btn" onclick="filterProducts('aromatic', this)">Aromatic</button>
+</div>
+
+<!-- PRODUCTS GRID -->
+<div class="products-section">
+  <div class="products-grid" id="productsGrid">
+
+    <!-- BLACK PEPPER -->
+    <div class="product-card reveal" data-category="pepper">
+      <span class="product-badge">Bestseller</span>
+      <div class="product-img" style="background: radial-gradient(circle, rgba(26,10,5,0.9) 0%, rgba(13,7,3,1) 100%);">
+        <div class="product-img-glow" style="background: radial-gradient(circle at 50% 60%, rgba(192,57,43,0.2), transparent 65%);"></div>
+        <span class="product-img-emoji">🫙</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Whole Spice · Premium</div>
+        <div class="product-name">Black Pepper</div>
+        <div class="product-desc">The king of spices — bold, pungent, and warmly complex. Our whole black peppercorns are harvested at peak ripeness from Kolli Hills estates, sun-dried to lock in their essential oils and characteristic heat.</div>
+        <div class="product-origin">📍 Kolli Hills, Tamil Nadu &amp; Wayanad, Kerala</div>
+        <div class="product-tags">
+          <span class="product-tag">Whole &amp; Ground</span>
+          <span class="product-tag">Bold Heat</span>
+          <span class="product-tag">Aromatic</span>
+        </div>
+        <div class="product-footer">
+          <button class="enquire-btn" onclick="handleEnquire(this, 'Black Pepper')">Enquire Now</button>
+          <button class="enquire-btn secondary">ℹ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- COFFEE ARABICA -->
+    <div class="product-card reveal" data-category="coffee">
+      <span class="product-badge origin">Kolli Hills Estate</span>
+      <div class="product-img" style="background: radial-gradient(circle, rgba(20,10,5,0.95) 0%, rgba(10,5,2,1) 100%);">
+        <div class="product-img-glow" style="background: radial-gradient(circle at 50% 60%, rgba(139,69,19,0.25), transparent 65%);"></div>
+        <span class="product-img-emoji">☕</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Coffee Powder · Arabica</div>
+        <div class="product-name">Coffee Powder — Arabica</div>
+        <div class="product-desc">Slow-grown at high altitude, our Arabica beans carry natural sweetness, subtle fruit notes, and a gentle acidity that defines premium Indian mountain coffee. Stone-ground for maximum flavour retention.</div>
+        <div class="product-origin">📍 Kolli Hills, Tamil Nadu</div>
+        <div class="product-tags">
+          <span class="product-tag">High Altitude</span>
+          <span class="product-tag">Fruity Notes</span>
+          <span class="product-tag">Mild Roast</span>
+        </div>
+        <div class="product-footer">
+          <button class="enquire-btn" onclick="handleEnquire(this, 'Coffee Arabica')">Enquire Now</button>
+          <button class="enquire-btn secondary">ℹ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- COFFEE ROBUSTA -->
+    <div class="product-card reveal" data-category="coffee">
+      <div class="product-img" style="background: radial-gradient(circle, rgba(15,8,4,0.95) 0%, rgba(8,4,2,1) 100%);">
+        <div class="product-img-glow" style="background: radial-gradient(circle at 50% 60%, rgba(100,50,10,0.3), transparent 65%);"></div>
+        <span class="product-img-emoji">☕</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Coffee Powder · Robusta</div>
+        <div class="product-name">Coffee Powder — Robusta</div>
+        <div class="product-desc">For those who prefer their coffee bold and unapologetic. Our Robusta delivers a strong, earthy body with a lingering bitterness that powers through milk and spice alike — the preferred base of South Indian filter coffee.</div>
+        <div class="product-origin">📍 Kolli Hills &amp; Coorg, Karnataka</div>
+        <div class="product-tags">
+          <span class="product-tag">Strong Body</span>
+          <span class="product-tag">Earthy</span>
+          <span class="product-tag">Filter Coffee</span>
+        </div>
+        <div class="product-footer">
+          <button class="enquire-btn" onclick="handleEnquire(this, 'Coffee Robusta')">Enquire Now</button>
+          <button class="enquire-btn secondary">ℹ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CINNAMON -->
+    <div class="product-card reveal" data-category="bark-leaf">
+      <span class="product-badge">True Ceylon</span>
+      <div class="product-img" style="background: radial-gradient(circle, rgba(30,12,6,0.9) 0%, rgba(18,7,3,1) 100%);">
+        <div class="product-img-glow" style="background: radial-gradient(circle at 50% 60%, rgba(139,69,19,0.25), transparent 65%);"></div>
+        <span class="product-img-emoji">🌿</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Bark Spice · Premium</div>
+        <div class="product-name">Cinnamon</div>
+        <div class="product-desc">Delicate, floral, and warmly sweet — our true cinnamon (Cinnamomum verum) is hand-rolled into fine quills. Unlike the harsh cassia variety, this cinnamon melts effortlessly into curries, desserts, and masala chai.</div>
+        <div class="product-origin">📍 Kerala &amp; Tamil Nadu</div>
+        <div class="product-tags">
+          <span class="product-tag">True Cinnamon</span>
+          <span class="product-tag">Quills &amp; Powder</span>
+          <span class="product-tag">Sweet &amp; Floral</span>
+        </div>
+        <div class="product-footer">
+          <button class="enquire-btn" onclick="handleEnquire(this, 'Cinnamon')">Enquire Now</button>
+          <button class="enquire-btn secondary">ℹ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLOVES -->
+    <div class="product-card reveal" data-category="aromatic">
+      <div class="product-img" style="background: radial-gradient(circle, rgba(25,8,5,0.9) 0%, rgba(14,4,2,1) 100%);">
+        <div class="product-img-glow" style="background: radial-gradient(circle at 50% 60%, rgba(192,57,43,0.2), transparent 65%);"></div>
+        <span class="product-img-emoji">🌺</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Flower Bud Spice · Aromatic</div>
+        <div class="product-name">Cloves</div>
+        <div class="product-desc">Intensely aromatic with a numbing warmth, cloves are the backbone of garam masala and biryani. Harvested before the buds open to preserve their volatile oils, our cloves carry exceptional eugenol content and depth.</div>
+        <div class="product-origin">📍 Tamil Nadu &amp; Kerala</div>
+        <div class="product-tags">
+          <span class="product-tag">Whole &amp; Powdered</span>
+          <span class="product-tag">Intense Aroma</span>
+          <span class="product-tag">Warm Heat</span>
+        </div>
+        <div class="product-footer">
+          <button class="enquire-btn" onclick="handleEnquire(this, 'Cloves')">Enquire Now</button>
+          <button class="enquire-btn secondary">ℹ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BAY LEAVES -->
+    <div class="product-card reveal" data-category="bark-leaf">
+      <div class="product-img" style="background: radial-gradient(circle, rgba(10,18,8,0.9) 0%, rgba(5,10,4,1) 100%);">
+        <div class="product-img-glow" style="background: radial-gradient(circle at 50% 60%, rgba(74,124,89,0.3), transparent 65%);"></div>
+        <span class="product-img-emoji">🍃</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Dried Leaf · Aromatic</div>
+        <div class="product-name">Bay Leaves</div>
+        <div class="product-desc">The silent flavour builder of every slow-cooked Indian dish. Our Indian bay leaves (tejpatta) are shade-dried to preserve their distinctive clove-like aroma and subtle eucalyptus undertone — far superior to the Mediterranean variety.</div>
+        <div class="product-origin">📍 Uttarakhand &amp; Northeast India</div>
+        <div class="product-tags">
+          <span class="product-tag">Whole Leaves</span>
+          <span class="product-tag">Slow-Cook</span>
+          <span class="product-tag">Mild Clove Note</span>
+        </div>
+        <div class="product-footer">
+          <button class="enquire-btn" onclick="handleEnquire(this, 'Bay Leaves')">Enquire Now</button>
+          <button class="enquire-btn secondary">ℹ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUTMEG -->
+    <div class="product-card reveal" data-category="aromatic">
+      <span class="product-badge">Rare Find</span>
+      <div class="product-img" style="background: radial-gradient(circle, rgba(22,12,6,0.9) 0%, rgba(12,6,2,1) 100%);">
+        <div class="product-img-glow" style="background: radial-gradient(circle at 50% 60%, rgba(232,184,75,0.2), transparent 65%);"></div>
+        <span class="product-img-emoji">🌰</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Seed Spice · Rare</div>
+        <div class="product-name">Nutmeg</div>
+        <div class="product-desc">Warm, woody, and intoxicatingly fragrant — nutmeg adds soul-depth to both savoury and sweet dishes. Our whole nutmegs are harvested from mature trees, sun-dried, and packed to retain their essential oils for maximum fragrance.</div>
+        <div class="product-origin">📍 Kerala Spice Coast</div>
+        <div class="product-tags">
+          <span class="product-tag">Whole &amp; Grated</span>
+          <span class="product-tag">Warm &amp; Woody</span>
+          <span class="product-tag">Desserts &amp; Curry</span>
+        </div>
+        <div class="product-footer">
+          <button class="enquire-btn" onclick="handleEnquire(this, 'Nutmeg')">Enquire Now</button>
+          <button class="enquire-btn secondary">ℹ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUTMEG FLOWER / MACE -->
+    <div class="product-card reveal" data-category="aromatic">
+      <span class="product-badge">Premium</span>
+      <div class="product-img" style="background: radial-gradient(circle, rgba(25,10,5,0.9) 0%, rgba(14,5,2,1) 100%);">
+        <div class="product-img-glow" style="background: radial-gradient(circle at 50% 60%, rgba(224,92,21,0.2), transparent 65%);"></div>
+        <span class="product-img-emoji">🌸</span>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Aril Spice · Ultra Premium</div>
+        <div class="product-name">Nutmeg Flower <em style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">(Mace)</em></div>
+        <div class="product-desc">The lacy red aril that wraps the nutmeg seed — mace is more delicate, more complex, and rarer than its sibling. Its flavour is softer and more perfumed, making it prized in Mughal cuisine, Nihari, and the finest biryanis.</div>
+        <div class="product-origin">📍 Kerala &amp; Lakshadweep</div>
+        <div class="product-tags">
+          <span class="product-tag">Blade &amp; Powder</span>
+          <span class="product-tag">Floral &amp; Delicate</span>
+          <span class="product-tag">Mughal Cuisine</span>
+        </div>
+        <div class="product-footer">
+          <button class="enquire-btn" onclick="handleEnquire(this, 'Nutmeg Flower (Mace)')">Enquire Now</button>
+          <button class="enquire-btn secondary">ℹ</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TESTIMONIAL -->
+<div class="testi-section">
+  <div class="testi-inner reveal">
+    <span class="section-label">A Word From the Field</span>
+    <h2 class="section-title">What <em style="color:var(--saffron)">Arjun</em> Says</h2>
+    <div class="testi-card-single">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Growing up in the shadow of Kolli Hills, I know what real spices smell like the moment you open a bag. SpiceCrowd captures that exactly — the pepper is alive, the cinnamon is floral, the coffee takes me straight back to my grandmother's kitchen. I have recommended them to everyone across India, and the response has been the same every time: where has this been all our lives?"</p>
+      <div class="testi-profile">
+        <div class="testi-avatar">🧑</div>
+        <div>
+          <div class="testi-name">Arjun</div>
+          <div class="testi-handle">📍 Kolli Hills, Tamil Nadu &amp; across India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="Spice Crowd" class="footer-logo-badge">
+        <span class="footer-logo">Spice<span>Crowd</span></span>
+        <p class="footer-tagline">Bringing the authentic flavors of India's most vibrant spice markets directly to your kitchen — one handcrafted blend at a time.</p>
+        <div class="newsletter-form">
+          <input type="email" class="newsletter-input" placeholder="Your email address">
+          <button class="newsletter-btn">Subscribe</button>
+        </div>
+        <div class="sustain-badge">🌱 Carbon-neutral shipping by 2025</div>
+      </div>
+      <div class="footer-col">
+        <h5>Products</h5>
+        <ul>
+          <li><a href="#">Black Pepper</a></li>
+          <li><a href="#">Coffee Arabica</a></li>
+          <li><a href="#">Coffee Robusta</a></li>
+          <li><a href="#">Cinnamon</a></li>
+          <li><a href="#">Cloves</a></li>
+          <li><a href="#">Bay Leaves</a></li>
+          <li><a href="#">Nutmeg &amp; Mace</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Learn</h5>
+        <ul>
+          <li><a href="#">Recipes</a></li>
+          <li><a href="#">Spice Guide</a></li>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Kolli Hills</a></li>
+          <li><a href="#">Sourcing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2024 Spice Crowd. All rights reserved. Made with ❤️ in India.</div>
+      <div class="social-links">
+        <a href="#" class="social-link">📸</a>
+        <a href="#" class="social-link">🐦</a>
+        <a href="#" class="social-link">▶️</a>
+        <a href="#" class="social-link">📌</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const trail = document.getElementById('cursorTrail');
+  let mx=0,my=0,tx=0,ty=0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+  function animateTrail() {
+    tx += (mx - tx) * 0.12;
+    ty += (my - ty) * 0.12;
+    trail.style.left = tx + 'px'; trail.style.top = ty + 'px';
+    requestAnimationFrame(animateTrail);
+  }
+  animateTrail();
+  document.querySelectorAll('button, a, .product-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '30px'; cursor.style.height = '30px';
+      trail.style.width = '60px'; trail.style.height = '60px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '18px'; cursor.style.height = '18px';
+      trail.style.width = '40px'; trail.style.height = '40px';
+    });
+  });
+
+  // LOADER
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1800);
+  });
+
+  // NAV SCROLL
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // THEME TOGGLE
+  const themeBtn = document.getElementById('themeToggle');
+  themeBtn.addEventListener('click', () => {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    themeBtn.textContent = isDark ? '🌙 Dark' : '☀ Light';
+  });
+
+  // FLOATING SPICES
+  const spiceEmojis = ['🌿','☕','🌶️','🫙','🍃','🌺','🌰','🌸','⭐','🫘'];
+  const floatContainer = document.getElementById('floatingSpices');
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('span');
+    s.className = 'fs';
+    s.textContent = spiceEmojis[Math.floor(Math.random() * spiceEmojis.length)];
+    s.style.left = Math.random() * 100 + '%';
+    s.style.animationDuration = (8 + Math.random() * 12) + 's';
+    s.style.animationDelay = (Math.random() * 12) + 's';
+    s.style.fontSize = (0.8 + Math.random() * 1.5) + 'rem';
+    floatContainer.appendChild(s);
+  }
+
+  // MARQUEE
+  const marqueeItems = ['🌿 Black Pepper', '✦', '☕ Arabica Coffee', '✦', '☕ Robusta Coffee', '✦', '🌿 Cinnamon', '✦', '🌺 Cloves', '✦', '🍃 Bay Leaves', '✦', '🌰 Nutmeg', '✦', '🌸 Nutmeg Flower', '✦'];
+  const marqueeTrack = document.getElementById('marqueeTrack');
+  const doubled = [...marqueeItems, ...marqueeItems];
+  doubled.forEach(t => {
+    const s = document.createElement('span');
+    s.className = t === '✦' ? 'dot' : '';
+    s.textContent = t;
+    marqueeTrack.appendChild(s);
+  });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // FILTER
+  function filterProducts(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.product-card').forEach(card => {
+      if (cat === 'all' || card.dataset.category === cat) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // ENQUIRE BUTTON
+  function handleEnquire(btn, productName) {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Request Sent!';
+    btn.style.background = 'var(--cardamom)';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+    }, 2000);
+  }
+</script>
+</body>
+</html>
