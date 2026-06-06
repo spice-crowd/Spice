@@ -1,0 +1,900 @@
+cat > /tmp/build_part2.py << 'PYEOF'
+with open('/tmp/v5_hills.txt') as f: HILLS=f.read()
+with open('/tmp/v5_logo.txt') as f: LOGO=f.read()
+with open('/tmp/v5_product.txt') as f: PROD=f.read()
+
+# Read Part 1
+with open('/mnt/user-data/outputs/spicecrowd-v5-part1.html','r') as f:
+    html = f.read()
+
+# ── PART 2 CSS ──
+PART2_CSS = """
+/* ═══════════════════════════════════════
+   PART 2 SECTIONS
+═══════════════════════════════════════ */
+
+/* SECTION WRAPPER */
+.section-page{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:flex-start;z-index:10;padding:72px 48px 40px;overflow-y:auto;}
+.section-page.vis{display:flex;}
+.section-page::-webkit-scrollbar{width:3px;}
+.section-page::-webkit-scrollbar-thumb{background:rgba(200,153,42,.2);}
+
+.sec-eyebrow{font-size:.52rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;text-align:center;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:900;color:var(--cream);text-align:center;line-height:.95;margin-bottom:8px;}
+.sec-title em{font-style:italic;color:var(--gold);}
+.sec-sub{font-size:.68rem;font-weight:300;color:var(--muted);text-align:center;max-width:560px;margin:0 auto 28px;line-height:1.8;}
+.sec-divider{width:60px;height:1px;background:var(--gold);opacity:.3;margin:0 auto 28px;}
+
+/* ── BENEFITS ── */
+.benefits-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%;max-width:1100px;}
+.benefit-card{background:rgba(200,153,42,.03);border:1px solid rgba(200,153,42,.1);padding:20px 16px;text-align:center;transition:all .25s;cursor:none;}
+.benefit-card:hover{background:rgba(200,153,42,.07);border-color:rgba(200,153,42,.28);transform:translateY(-3px);}
+.bc-icon{font-size:2rem;margin-bottom:10px;display:block;}
+.bc-spice{font-size:.44rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(200,153,42,.5);margin-bottom:6px;}
+.bc-title{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--cream);font-style:italic;margin-bottom:6px;}
+.bc-desc{font-size:.58rem;color:var(--muted);line-height:1.75;}
+
+/* ── GALLERY ── */
+.gallery-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
+.gtab{font-size:.52rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:7px 18px;border:1px solid rgba(200,153,42,.18);color:rgba(200,153,42,.55);background:transparent;cursor:none;transition:all .2s;}
+.gtab.on{background:var(--gold);color:#060401;border-color:var(--gold);}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:1000px;}
+.gallery-img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:brightness(.75) saturate(1.15);transition:all .3s;}
+.gallery-img:hover{filter:brightness(.9) saturate(1.3);transform:scale(1.02);}
+.gallery-cap{font-size:.48rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:5px;}
+
+/* ── ORIGIN ── */
+.origin-wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;width:100%;max-width:1100px;align-items:center;}
+.origin-img-wrap{position:relative;}
+.origin-img{width:100%;border-radius:2px;filter:brightness(.72) saturate(1.2);box-shadow:0 20px 50px rgba(0,0,0,.7);}
+.origin-badge-img{position:absolute;bottom:-16px;right:-16px;width:90px;height:90px;object-fit:contain;mix-blend-mode:screen;filter:brightness(2.5);}
+.origin-eyebrow{font-size:.5rem;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.origin-h{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--cream);line-height:.95;margin-bottom:14px;}
+.origin-h em{font-style:italic;color:var(--gold);}
+.origin-body{font-size:.68rem;font-weight:300;color:var(--muted);line-height:1.92;margin-bottom:18px;}
+.origin-facts{display:flex;gap:14px;flex-wrap:wrap;}
+.of{text-align:center;padding:10px 14px;border:1px solid rgba(200,153,42,.12);}
+.of strong{display:block;font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--gold);}
+.of span{font-size:.44rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+
+/* ── SPECS ── */
+.specs-wrap{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;width:100%;max-width:1000px;}
+.spec-block{background:rgba(200,153,42,.02);border:1px solid rgba(200,153,42,.1);padding:20px;}
+.spec-block h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--cream);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(200,153,42,.1);}
+.spec-table{width:100%;border-collapse:collapse;}
+.spec-table tr{border-bottom:1px solid rgba(200,153,42,.05);}
+.spec-table tr:last-child{border-bottom:none;}
+.spec-table td{padding:6px 0;font-size:.6rem;}
+.spec-table td:first-child{color:rgba(200,153,42,.55);letter-spacing:.12em;text-transform:uppercase;width:45%;font-weight:500;}
+.spec-table td:last-child{color:var(--muted);}
+
+/* ── REVIEWS ── */
+.rev-overall{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:24px;padding:18px;background:rgba(200,153,42,.04);border:1px solid rgba(200,153,42,.1);max-width:500px;margin-left:auto;margin-right:auto;}
+.rev-big{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:var(--gold);}
+.rev-stars-big{font-size:1.2rem;color:var(--gold);letter-spacing:2px;display:block;margin-bottom:4px;}
+.rev-total{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.rev-bars{display:flex;flex-direction:column;gap:4px;}
+.rev-bar{display:flex;align-items:center;gap:8px;}
+.rb-lbl{font-size:.5rem;color:var(--muted);width:14px;}
+.rb-track{flex:1;height:4px;background:rgba(255,255,255,.05);border-radius:2px;}
+.rb-fill{height:100%;background:var(--gold);border-radius:2px;}
+.rb-n{font-size:.48rem;color:var(--muted);width:24px;}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%;max-width:1100px;margin-top:20px;}
+.rev-card{background:rgba(255,255,255,.02);border:1px solid rgba(200,153,42,.09);padding:16px;}
+.rc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.rc-name{font-family:'Playfair Display',serif;font-size:.82rem;color:var(--cream);font-style:italic;}
+.rc-loc{font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
+.rc-stars{color:var(--gold);font-size:.72rem;}
+.rc-verified{display:flex;align-items:center;gap:4px;font-size:.44rem;color:#6dbf6d;margin-bottom:6px;}
+.rc-product{font-size:.44rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,153,42,.5);padding:2px 7px;border:1px solid rgba(200,153,42,.14);display:inline-block;margin-bottom:7px;}
+.rc-text{font-size:.6rem;color:var(--muted);line-height:1.72;}
+.rc-date{font-size:.42rem;color:rgba(245,240,232,.16);margin-top:6px;}
+
+/* ── FAQ ── */
+.faq-wrap{width:100%;max-width:760px;}
+.faq-item{border-bottom:1px solid rgba(200,153,42,.1);overflow:hidden;}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:14px 0;cursor:none;gap:12px;}
+.faq-q-txt{font-size:.72rem;font-weight:500;color:var(--cream);letter-spacing:.04em;}
+.faq-icon{font-size:.9rem;color:var(--gold);transition:transform .25s;flex-shrink:0;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-item.open .faq-a{max-height:200px;}
+.faq-a p{font-size:.64rem;color:var(--muted);line-height:1.85;padding-bottom:14px;}
+
+/* ── RELATED ── */
+.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%;max-width:1100px;}
+.related-card{background:rgba(200,153,42,.03);border:1px solid rgba(200,153,42,.1);padding:18px;text-align:center;cursor:none;transition:all .25s;}
+.related-card:hover{transform:translateY(-4px);border-color:rgba(200,153,42,.3);}
+.rc-img{width:80px;height:80px;object-fit:contain;mix-blend-mode:multiply;filter:contrast(1.05);margin:0 auto 10px;}
+.rc-name{font-family:'Playfair Display',serif;font-size:.85rem;color:var(--cream);font-style:italic;margin-bottom:4px;}
+.rc-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px;}
+.btn-rel{width:100%;padding:8px;background:transparent;border:1px solid rgba(200,153,42,.22);color:rgba(200,153,42,.65);font-size:.5rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:none;transition:all .2s;}
+.btn-rel:hover{background:var(--gold);color:#060401;}
+
+/* ── TRUST ── */
+.trust-wrap{width:100%;max-width:1000px;}
+.trust-certs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px;}
+.cert-card{background:rgba(200,153,42,.03);border:1px solid rgba(200,153,42,.12);padding:22px;text-align:center;}
+.cert-icon{font-size:2.2rem;margin-bottom:10px;display:block;}
+.cert-title{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--cream);font-style:italic;margin-bottom:5px;}
+.cert-num{font-size:.56rem;letter-spacing:.15em;color:var(--gold);margin-bottom:4px;}
+.cert-desc{font-size:.56rem;color:var(--muted);line-height:1.65;}
+.trust-badges-big{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.tbb{display:flex;flex-direction:column;align-items:center;gap:7px;padding:16px 10px;background:rgba(255,255,255,.02);border:1px solid rgba(200,153,42,.07);}
+.tbb-icon{font-size:1.6rem;}
+.tbb-txt{font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.5;}
+
+/* ── DELIVERY ── */
+.delivery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:100%;max-width:1000px;}
+.del-card{background:rgba(200,153,42,.03);border:1px solid rgba(200,153,42,.1);padding:22px;}
+.del-icon{font-size:2rem;margin-bottom:12px;display:block;}
+.del-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--cream);font-style:italic;margin-bottom:10px;}
+.del-list{list-style:none;}
+.del-list li{font-size:.6rem;color:var(--muted);padding:4px 0;border-bottom:1px solid rgba(200,153,42,.05);display:flex;gap:7px;}
+.del-list li::before{content:"→";color:var(--gold);flex-shrink:0;}
+
+/* ── ABOUT ── */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;width:100%;max-width:1100px;align-items:start;}
+.about-logo-big{width:140px;height:140px;object-fit:contain;mix-blend-mode:screen;filter:brightness(2.8);margin-bottom:18px;}
+.about-h{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--cream);line-height:.95;margin-bottom:12px;}
+.about-h em{font-style:italic;color:var(--gold);}
+.about-story{font-size:.68rem;color:var(--muted);line-height:1.92;margin-bottom:18px;}
+.about-addr{background:rgba(200,153,42,.04);border:1px solid rgba(200,153,42,.1);padding:16px;margin-bottom:14px;}
+.addr-title{font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.addr-line{font-size:.62rem;color:var(--muted);line-height:1.8;}
+.about-lic{background:rgba(200,153,42,.04);border:1px solid rgba(200,153,42,.1);padding:16px;}
+.lic-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(200,153,42,.06);font-size:.6rem;}
+.lic-row:last-child{border-bottom:none;}
+.lic-row span:first-child{color:rgba(200,153,42,.6);text-transform:uppercase;letter-spacing:.1em;font-size:.52rem;}
+.lic-row span:last-child{color:var(--muted);}
+.about-contact{display:flex;flex-direction:column;gap:10px;margin-top:18px;}
+.ac-item{display:flex;align-items:center;gap:10px;font-size:.6rem;color:var(--muted);}
+.ac-item span{font-size:1rem;}
+.ac-item a{color:var(--gold);text-decoration:none;}
+.about-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px;}
+.as{padding:16px;border:1px solid rgba(200,153,42,.1);text-align:center;}
+.as strong{display:block;font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);margin-bottom:3px;}
+.as span{font-size:.46rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+.about-values{display:flex;flex-direction:column;gap:10px;}
+.av{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-left:2px solid rgba(200,153,42,.2);}
+.av-icon{font-size:1.1rem;flex-shrink:0;}
+.av-title{font-size:.6rem;font-weight:600;color:rgba(245,240,232,.65);margin-bottom:2px;letter-spacing:.07em;}
+.av-desc{font-size:.54rem;color:var(--muted);line-height:1.6;}
+
+/* ── TRACK ORDER ── */
+.track-wrap{width:100%;max-width:600px;}
+.track-box{background:rgba(200,153,42,.03);border:1px solid rgba(200,153,42,.12);padding:28px;}
+.track-input-row{display:flex;gap:8px;margin-bottom:18px;}
+.track-in{flex:1;background:transparent;border:1px solid rgba(200,153,42,.18);padding:11px 14px;color:var(--cream);font-size:.65rem;outline:none;font-family:'Jost',sans-serif;letter-spacing:.08em;}
+.track-in::placeholder{color:rgba(245,240,232,.18);}
+.track-in:focus{border-color:var(--gold);}
+.btn-track{font-size:.56rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:11px 20px;background:var(--gold);color:#060401;border:none;cursor:none;transition:all .2s;white-space:nowrap;}
+.btn-track:hover{background:var(--cream);}
+.track-result{display:none;}
+.track-result.show{display:block;}
+.track-status-bar{display:flex;justify-content:space-between;margin-bottom:18px;position:relative;}
+.track-status-bar::before{content:"";position:absolute;top:14px;left:14px;right:14px;height:2px;background:rgba(200,153,42,.15);}
+.track-status-bar::after{content:"";position:absolute;top:14px;left:14px;width:var(--progress,0%);height:2px;background:var(--gold);transition:width .8s ease;}
+.ts{display:flex;flex-direction:column;align-items:center;gap:6px;z-index:1;position:relative;}
+.ts-dot{width:28px;height:28px;border-radius:50%;border:2px solid rgba(200,153,42,.2);background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:.75rem;}
+.ts-dot.done{background:var(--gold);border-color:var(--gold);}
+.ts-dot.active{border-color:var(--gold);box-shadow:0 0 12px rgba(200,153,42,.4);}
+.ts-lbl{font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.ts-lbl.active{color:var(--gold);}
+.track-details{background:rgba(255,255,255,.02);border:1px solid rgba(200,153,42,.08);padding:14px;}
+.td-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(200,153,42,.05);font-size:.6rem;}
+.td-row:last-child{border-bottom:none;}
+.td-row span:first-child{color:rgba(200,153,42,.55);letter-spacing:.1em;text-transform:uppercase;font-size:.52rem;}
+.td-row span:last-child{color:var(--muted);}
+
+/* ── ADMIN PANEL ── */
+#admin-ov{position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,.92);display:none;flex-direction:column;backdrop-filter:blur(12px);}
+#admin-ov.open{display:flex;}
+.admin-login{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;}
+.admin-login h2{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--cream);font-style:italic;}
+.admin-in{background:transparent;border:1px solid rgba(200,153,42,.25);padding:11px 16px;color:var(--cream);font-size:.65rem;outline:none;font-family:'Jost',sans-serif;width:280px;letter-spacing:.08em;}
+.admin-in::placeholder{color:rgba(245,240,232,.2);}
+.btn-admin-login{padding:11px 28px;background:var(--gold);color:#060401;border:none;cursor:none;font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;transition:all .2s;}
+.btn-admin-login:hover{background:var(--cream);}
+.admin-err{font-size:.56rem;color:#c07070;display:none;}
+.admin-err.show{display:block;}
+.admin-dash{display:none;flex-direction:column;height:100%;overflow:hidden;}
+.admin-dash.show{display:flex;}
+.admin-nav{display:flex;justify-content:space-between;align-items:center;padding:14px 28px;background:rgba(0,0,0,.5);border-bottom:1px solid rgba(200,153,42,.1);}
+.admin-nav h2{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);font-style:italic;}
+.btn-admin-close{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,.35);background:none;border:1px solid rgba(245,240,232,.1);padding:7px 14px;cursor:none;transition:all .2s;}
+.btn-admin-close:hover{color:var(--gold);border-color:var(--gold);}
+.admin-body{flex:1;overflow-y:auto;padding:24px 28px;}
+.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.astat{background:rgba(200,153,42,.04);border:1px solid rgba(200,153,42,.12);padding:16px;text-align:center;}
+.astat strong{display:block;font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);margin-bottom:3px;}
+.astat span{font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+.admin-section-title{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid rgba(200,153,42,.1);}
+.admin-orders{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.ao{display:flex;align-items:center;gap:14px;padding:12px 16px;background:rgba(255,255,255,.02);border:1px solid rgba(200,153,42,.08);}
+.ao-id{font-family:'Playfair Display',serif;font-size:.78rem;color:var(--gold);min-width:100px;}
+.ao-info{flex:1;}
+.ao-name{font-size:.65rem;color:var(--cream);}
+.ao-items{font-size:.52rem;color:var(--muted);margin-top:1px;}
+.ao-amt{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);min-width:70px;text-align:right;}
+.ao-status{padding:4px 10px;font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;}
+.ao-status.placed{background:rgba(200,153,42,.12);color:var(--gold);}
+.ao-status.shipped{background:rgba(50,100,200,.15);color:#7ab0ff;}
+.ao-status.delivered{background:rgba(50,160,80,.15);color:#6dbf6d;}
+.ao-actions{display:flex;gap:6px;}
+.btn-ao{font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(200,153,42,.2);background:transparent;color:rgba(200,153,42,.6);cursor:none;transition:all .18s;}
+.btn-ao:hover{background:var(--gold);color:#060401;border-color:var(--gold);}
+.admin-inventory{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.inv-card{background:rgba(200,153,42,.03);border:1px solid rgba(200,153,42,.1);padding:14px;}
+.inv-name{font-family:'Playfair Display',serif;font-size:.82rem;color:var(--cream);font-style:italic;margin-bottom:8px;}
+.inv-row{display:flex;justify-content:space-between;font-size:.55rem;padding:3px 0;color:var(--muted);}
+.inv-row span:last-child{color:var(--gold);}
+
+/* ── RESPONSIVE PART 2 ── */
+@media(max-width:768px){
+  .section-page{padding:60px 16px 30px;}
+  .benefits-grid,.related-grid{grid-template-columns:repeat(2,1fr);}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .origin-wrap,.about-wrap{grid-template-columns:1fr;}
+  .specs-wrap{grid-template-columns:1fr;}
+  .rev-grid{grid-template-columns:repeat(2,1fr);}
+  .trust-certs{grid-template-columns:1fr;}
+  .trust-badges-big{grid-template-columns:repeat(3,1fr);}
+  .delivery-grid{grid-template-columns:1fr;}
+  .admin-stats{grid-template-columns:repeat(2,1fr);}
+  .admin-inventory{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:480px){
+  .benefits-grid,.rev-grid,.trust-badges-big{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:1fr;}
+}
+"""
+
+# ── PART 2 HTML ──
+PART2_HTML = """
+<!-- ═══════════════════════════════════════
+     PART 2 SECTIONS
+═══════════════════════════════════════ -->
+
+<!-- BENEFITS -->
+<div class="section-page" id="p-benefits">
+  <div class="sec-eyebrow">Why Kolli Hills Spices</div>
+  <h2 class="sec-title">The <em>Benefits</em></h2>
+  <div class="sec-divider"></div>
+  <div class="benefits-grid">
+    <div class="benefit-card"><span class="bc-icon">🌶️</span><div class="bc-spice">Black Pepper</div><div class="bc-title">Boosts Metabolism</div><div class="bc-desc">Piperine in black pepper increases metabolic rate by 8% and aids nutrient absorption from every meal.</div></div>
+    <div class="benefit-card"><span class="bc-icon">🦷</span><div class="bc-spice">Cloves</div><div class="bc-title">Natural Antiseptic</div><div class="bc-desc">Eugenol in cloves is a powerful natural antiseptic used in dental care and immunity building for centuries.</div></div>
+    <div class="benefit-card"><span class="bc-icon">🍃</span><div class="bc-spice">Bay Leaves</div><div class="bc-title">Aids Digestion</div><div class="bc-desc">Biryani leaves contain enzymes that break down proteins and improve digestive health significantly.</div></div>
+    <div class="benefit-card"><span class="bc-icon">❤️</span><div class="bc-spice">Cinnamon</div><div class="bc-title">Regulates Blood Sugar</div><div class="bc-desc">True Ceylon cinnamon lowers fasting blood sugar by up to 29%. A daily stick in your chai makes a real difference.</div></div>
+    <div class="benefit-card"><span class="bc-icon">🧠</span><div class="bc-spice">Black Pepper</div><div class="bc-title">Sharpens Memory</div><div class="bc-desc">Piperine enhances brain function and has shown anti-depressant properties in clinical studies.</div></div>
+    <div class="benefit-card"><span class="bc-icon">🔥</span><div class="bc-spice">Cloves</div><div class="bc-title">Anti-Inflammatory</div><div class="bc-desc">Clove extract reduces inflammation markers as effectively as ibuprofen without side effects.</div></div>
+    <div class="benefit-card"><span class="bc-icon">💊</span><div class="bc-spice">Bay Leaves</div><div class="bc-title">Rich in Vitamins</div><div class="bc-desc">Packed with Vitamins A, B6, and C. Bay leaves have been used in Ayurvedic medicine for over 3,000 years.</div></div>
+    <div class="benefit-card"><span class="bc-icon">🛡️</span><div class="bc-spice">Cinnamon</div><div class="bc-title">Fights Infections</div><div class="bc-desc">Cinnamaldehyde fights various bacteria and fungi, protecting you from infection naturally.</div></div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="section-page" id="p-gallery">
+  <div class="sec-eyebrow">From Farm to Your Kitchen</div>
+  <h2 class="sec-title">Product <em>Gallery</em></h2>
+  <div class="sec-divider"></div>
+  <div class="gallery-tabs">
+    <button class="gtab on" onclick="switchGallery('all',this)">All</button>
+    <button class="gtab" onclick="switchGallery('pepper',this)">Black Pepper</button>
+    <button class="gtab" onclick="switchGallery('cloves',this)">Cloves</button>
+    <button class="gtab" onclick="switchGallery('bayleaf',this)">Bay Leaves</button>
+    <button class="gtab" onclick="switchGallery('cinnamon',this)">Cinnamon</button>
+  </div>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</div>
+
+<!-- ORIGIN -->
+<div class="section-page" id="p-origin">
+  <div class="origin-wrap">
+    <div class="origin-img-wrap">
+      <img class="origin-img" src="HILLS_SRC" alt="Kolli Hills">
+      <img class="origin-badge-img" src="LOGO_SRC" alt="Spice Crowd">
+    </div>
+    <div>
+      <div class="origin-eyebrow">Our Source · Kolli Hills, Tamil Nadu</div>
+      <h2 class="origin-h">The Hills of<br><em>70 Bends</em></h2>
+      <p class="origin-body">Kolli Hills — known as the "Mountains of Death" for its treacherous 70 hairpin bends — is one of India's most pristine spice regions. Sitting at 1300 metres above sea level in the Eastern Ghats, the region's cool mist, rich red soil, and ancient forest canopy create ideal conditions for growing world-class spices.<br><br>Our farmers have cultivated spices here for generations using traditional methods that preserve the natural potency and aroma that commercial farming destroys. When you open a Spice Crowd pack, you're opening a piece of Kolli Hills itself.</p>
+      <div class="origin-facts">
+        <div class="of"><strong>70</strong><span>Hairpin Bends</span></div>
+        <div class="of"><strong>1300m</strong><span>Elevation</span></div>
+        <div class="of"><strong>100%</strong><span>Natural</span></div>
+        <div class="of"><strong>2021</strong><span>Est.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPECIFICATIONS -->
+<div class="section-page" id="p-specs">
+  <div class="sec-eyebrow">Detailed Product Information</div>
+  <h2 class="sec-title">Product <em>Specifications</em></h2>
+  <div class="sec-divider"></div>
+  <div class="specs-wrap">
+    <div class="spec-block">
+      <h3>🌶️ Black Pepper</h3>
+      <table class="spec-table">
+        <tr><td>Origin</td><td>Kolli Hills, Tamil Nadu — 1300m</td></tr>
+        <tr><td>Grade</td><td>Premium A — Hand Sorted</td></tr>
+        <tr><td>Piperine Content</td><td>5–9% (Superior to market avg)</td></tr>
+        <tr><td>Moisture</td><td>Max 12%</td></tr>
+        <tr><td>Processing</td><td>Sun-dried, No chemicals</td></tr>
+        <tr><td>Shelf Life</td><td>24 months from packing</td></tr>
+        <tr><td>Storage</td><td>Cool, dry place away from sunlight</td></tr>
+        <tr><td>FSSAI Lic.</td><td>12426998000062</td></tr>
+      </table>
+    </div>
+    <div class="spec-block">
+      <h3>🤎 Cloves</h3>
+      <table class="spec-table">
+        <tr><td>Origin</td><td>Kolli Hills, Tamil Nadu — 1300m</td></tr>
+        <tr><td>Grade</td><td>Aromatic A+ — Peak Bloom</td></tr>
+        <tr><td>Eugenol Content</td><td>72–90% (Highest quality)</td></tr>
+        <tr><td>Moisture</td><td>Max 10%</td></tr>
+        <tr><td>Processing</td><td>Hand-picked, Sun-dried</td></tr>
+        <tr><td>Shelf Life</td><td>36 months from packing</td></tr>
+        <tr><td>Storage</td><td>Airtight container, cool place</td></tr>
+        <tr><td>FSSAI Lic.</td><td>12426998000062</td></tr>
+      </table>
+    </div>
+    <div class="spec-block">
+      <h3>🍃 Biryani Leaves</h3>
+      <table class="spec-table">
+        <tr><td>Origin</td><td>Kolli Hills, Tamil Nadu — 1300m</td></tr>
+        <tr><td>Grade</td><td>Biryani Select — Wild Harvest</td></tr>
+        <tr><td>Aroma Profile</td><td>Floral, Herbal, Mildly Sweet</td></tr>
+        <tr><td>Moisture</td><td>Max 8%</td></tr>
+        <tr><td>Processing</td><td>Wild harvest, Slow-dried at source</td></tr>
+        <tr><td>Shelf Life</td><td>18 months from packing</td></tr>
+        <tr><td>Storage</td><td>Dry, airtight container</td></tr>
+        <tr><td>FSSAI Lic.</td><td>12426998000062</td></tr>
+      </table>
+    </div>
+    <div class="spec-block">
+      <h3>🟤 True Cinnamon</h3>
+      <table class="spec-table">
+        <tr><td>Origin</td><td>Kolli Hills, Tamil Nadu — 1300m</td></tr>
+        <tr><td>Grade</td><td>True Ceylon — Hand Peeled</td></tr>
+        <tr><td>Coumarin</td><td>Very Low (&lt;0.004%) — Safe daily use</td></tr>
+        <tr><td>Moisture</td><td>Max 11%</td></tr>
+        <tr><td>Processing</td><td>Hand-peeled, Sun-dried</td></tr>
+        <tr><td>Shelf Life</td><td>24 months from packing</td></tr>
+        <tr><td>Storage</td><td>Cool, dry, away from moisture</td></tr>
+        <tr><td>FSSAI Lic.</td><td>12426998000062</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<div class="section-page" id="p-reviews">
+  <div class="sec-eyebrow">What Our Customers Say</div>
+  <h2 class="sec-title">Verified <em>Reviews</em></h2>
+  <div class="sec-divider"></div>
+  <div class="rev-overall">
+    <div class="rev-big">4.8</div>
+    <div>
+      <span class="rev-stars-big">★★★★★</span>
+      <div class="rev-total">Based on 2,420 verified reviews</div>
+    </div>
+    <div class="rev-bars">
+      <div class="rev-bar"><span class="rb-lbl">5★</span><div class="rb-track"><div class="rb-fill" style="width:78%"></div></div><span class="rb-n">78%</span></div>
+      <div class="rev-bar"><span class="rb-lbl">4★</span><div class="rb-track"><div class="rb-fill" style="width:16%"></div></div><span class="rb-n">16%</span></div>
+      <div class="rev-bar"><span class="rb-lbl">3★</span><div class="rb-track"><div class="rb-fill" style="width:4%"></div></div><span class="rb-n">4%</span></div>
+      <div class="rev-bar"><span class="rb-lbl">2★</span><div class="rb-track"><div class="rb-fill" style="width:1%"></div></div><span class="rb-n">1%</span></div>
+      <div class="rev-bar"><span class="rb-lbl">1★</span><div class="rb-track"><div class="rb-fill" style="width:1%"></div></div><span class="rb-n">1%</span></div>
+    </div>
+  </div>
+  <div class="rev-grid" id="rev-grid"></div>
+</div>
+
+<!-- FAQ -->
+<div class="section-page" id="p-faq">
+  <div class="sec-eyebrow">Got Questions?</div>
+  <h2 class="sec-title">Frequently Asked <em>Questions</em></h2>
+  <div class="sec-divider"></div>
+  <div class="faq-wrap" id="faq-wrap"></div>
+</div>
+
+<!-- RELATED -->
+<div class="section-page" id="p-related">
+  <div class="sec-eyebrow">Complete Your Kitchen</div>
+  <h2 class="sec-title">You Might Also <em>Love</em></h2>
+  <div class="sec-divider"></div>
+  <div class="related-grid" id="related-grid"></div>
+</div>
+
+<!-- TRUST & CERTS -->
+<div class="section-page" id="p-trust">
+  <div class="sec-eyebrow">Why Trust Spice Crowd</div>
+  <h2 class="sec-title">Certified <em>Quality</em></h2>
+  <div class="sec-divider"></div>
+  <div class="trust-wrap">
+    <div class="trust-certs">
+      <div class="cert-card"><span class="cert-icon">🏛️</span><div class="cert-title">FSSAI Licensed</div><div class="cert-num">Lic. No. 12426998000062</div><div class="cert-desc">Fully licensed by Food Safety and Standards Authority of India. Every batch tested and certified safe.</div></div>
+      <div class="cert-card"><span class="cert-icon">📋</span><div class="cert-title">GST Registered</div><div class="cert-num">GSTIN: 33FFIPS5308F1ZE</div><div class="cert-desc">Fully GST-registered business. Transparent invoicing with valid tax receipts for every order.</div></div>
+      <div class="cert-card"><span class="cert-icon">🔬</span><div class="cert-title">Lab Tested</div><div class="cert-num">Every Batch Certified</div><div class="cert-desc">Each batch is independently lab-tested for purity, moisture content, and absence of adulterants.</div></div>
+    </div>
+    <div class="trust-badges-big">
+      <div class="tbb"><div class="tbb-icon">🌿</div><div class="tbb-txt">100% Organic<br>No Additives</div></div>
+      <div class="tbb"><div class="tbb-icon">🏔️</div><div class="tbb-txt">Direct from<br>Kolli Hills Farm</div></div>
+      <div class="tbb"><div class="tbb-icon">📦</div><div class="tbb-txt">Ships Within<br>24 Hours</div></div>
+      <div class="tbb"><div class="tbb-icon">↩️</div><div class="tbb-txt">Easy 7-Day<br>Returns</div></div>
+      <div class="tbb"><div class="tbb-icon">🔒</div><div class="tbb-txt">100% Secure<br>Payments</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DELIVERY & RETURNS -->
+<div class="section-page" id="p-delivery">
+  <div class="sec-eyebrow">Shipping & Returns Policy</div>
+  <h2 class="sec-title">Delivery & <em>Returns</em></h2>
+  <div class="sec-divider"></div>
+  <div class="delivery-grid">
+    <div class="del-card">
+      <span class="del-icon">🚀</span>
+      <div class="del-title">Fast Delivery</div>
+      <ul class="del-list">
+        <li>Orders placed before 2 PM ship same day</li>
+        <li>Standard delivery: 3–5 business days</li>
+        <li>Express delivery: 1–2 business days (available)</li>
+        <li>Free shipping on orders above ₹499</li>
+        <li>₹60 shipping on orders below ₹499</li>
+        <li>Pan-India delivery available</li>
+      </ul>
+    </div>
+    <div class="del-card">
+      <span class="del-icon">📦</span>
+      <div class="del-title">Packaging</div>
+      <ul class="del-list">
+        <li>Food-grade resealable zipper pouches</li>
+        <li>Nitrogen-flushed for freshness</li>
+        <li>Tamper-evident seals on all packs</li>
+        <li>Eco-friendly outer packaging</li>
+        <li>Temperature-controlled storage before shipping</li>
+        <li>Batch number printed on every pack</li>
+      </ul>
+    </div>
+    <div class="del-card">
+      <span class="del-icon">↩️</span>
+      <div class="del-title">Easy Returns</div>
+      <ul class="del-list">
+        <li>7-day hassle-free return policy</li>
+        <li>Full refund if product is damaged in transit</li>
+        <li>Replacement if quality doesn't meet expectations</li>
+        <li>WhatsApp us at +91 99999 99999 to initiate</li>
+        <li>Refund processed within 5–7 business days</li>
+        <li>No questions asked for first-time customers</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section-page" id="p-about">
+  <div class="about-wrap">
+    <div>
+      <img class="about-logo-big" src="LOGO_SRC" alt="Spice Crowd">
+      <h2 class="about-h">Who We <em>Are</em></h2>
+      <p class="about-story">Spice Crowd was born from a simple belief — that India's finest spices deserve to reach every kitchen, pure and unadulterated. We source directly from the highland farmers of Kolli Hills, Tamil Nadu, where 1300 metres of elevation creates the perfect microclimate for growing world-class spices.<br><br>Every packet carries the story of the hill, the hands that picked it, and the heritage of South Indian spice culture dating back centuries. No middlemen, no additives, no compromise.</p>
+      <div class="about-addr">
+        <div class="addr-title">Registered Address</div>
+        <div class="addr-line">Spice Crowd<br>No. 2/89, Solakkadu, Valavanthi Nadu<br>Kolli Hills, Namakkal District<br>Tamil Nadu — 637411, India</div>
+      </div>
+      <div class="about-lic">
+        <div class="lic-row"><span>FSSAI Lic. No.</span><span>12426998000062</span></div>
+        <div class="lic-row"><span>GSTIN</span><span>33FFIPS5308F1ZE</span></div>
+        <div class="lic-row"><span>Established</span><span>2021</span></div>
+      </div>
+      <div class="about-contact">
+        <div class="ac-item"><span>📞</span><a href="tel:+919999999999">+91 99999 99999</a></div>
+        <div class="ac-item"><span>✉️</span><a href="mailto:hello@spicecrowd.in">hello@spicecrowd.in</a></div>
+        <div class="ac-item"><span>🌐</span><a href="https://spicecrowd.in">spicecrowd.in</a></div>
+        <div class="ac-item"><span>📸</span>@spicecrowd</div>
+      </div>
+    </div>
+    <div>
+      <div class="about-stats">
+        <div class="as"><strong>2021</strong><span>Established</span></div>
+        <div class="as"><strong>1300m</strong><span>Elevation</span></div>
+        <div class="as"><strong>4+</strong><span>Spices</span></div>
+        <div class="as"><strong>2400+</strong><span>Customers</span></div>
+      </div>
+      <div class="about-values">
+        <div class="av"><div class="av-icon">🌱</div><div><div class="av-title">Farm to Table</div><div class="av-desc">Direct from Kolli Hills farmers. No middlemen, no adulteration, no compromise on quality.</div></div></div>
+        <div class="av"><div class="av-icon">⚡</div><div><div class="av-title">Small Batch Quality</div><div class="av-desc">Every batch is hand-sorted and quality tested before packing. Never mass-produced.</div></div></div>
+        <div class="av"><div class="av-icon">🏔️</div><div><div class="av-title">Kolli Hills Heritage</div><div class="av-desc">70 hairpin bends, misty forests, ancient spice routes — the terroir that makes our spices unique.</div></div></div>
+        <div class="av"><div class="av-icon">🔬</div><div><div class="av-title">Lab Certified</div><div class="av-desc">FSSAI licensed, independently lab-tested, GST registered. Complete transparency.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRACK ORDER -->
+<div class="section-page" id="p-track">
+  <div class="sec-eyebrow">Where Is My Order?</div>
+  <h2 class="sec-title">Track Your <em>Order</em></h2>
+  <div class="sec-divider"></div>
+  <div class="track-wrap">
+    <div class="track-box">
+      <div class="track-input-row">
+        <input class="track-in" id="track-in" placeholder="Enter your Order ID (e.g. SC-ABC123)">
+        <button class="btn-track" onclick="trackOrder()">Track ›</button>
+      </div>
+      <div class="track-result" id="track-result">
+        <div class="track-status-bar" id="track-bar" style="--progress:60%">
+          <div class="ts"><div class="ts-dot done">✓</div><div class="ts-lbl">Placed</div></div>
+          <div class="ts"><div class="ts-dot done">✓</div><div class="ts-lbl">Confirmed</div></div>
+          <div class="ts"><div class="ts-dot active">📦</div><div class="ts-lbl active">Shipped</div></div>
+          <div class="ts"><div class="ts-dot">🚚</div><div class="ts-lbl">Out for Delivery</div></div>
+          <div class="ts"><div class="ts-dot">🎉</div><div class="ts-lbl">Delivered</div></div>
+        </div>
+        <div class="track-details" id="track-details"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-ov">
+  <div class="admin-login" id="admin-login">
+    <img src="LOGO_SRC" style="width:80px;mix-blend-mode:screen;filter:brightness(2.5);margin-bottom:8px" alt="SC">
+    <h2>Admin Panel</h2>
+    <p style="font-size:.55rem;color:var(--muted);letter-spacing:.12em">SPICE CROWD · RESTRICTED ACCESS</p>
+    <input class="admin-in" id="admin-pass" type="password" placeholder="Enter admin password">
+    <div class="admin-err" id="admin-err">Incorrect password. Access denied.</div>
+    <button class="btn-admin-login" onclick="adminLogin()">Access Dashboard</button>
+    <button style="font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,.25);background:none;border:none;cursor:none;margin-top:8px" onclick="closeAdmin()">Cancel</button>
+  </div>
+  <div class="admin-dash" id="admin-dash">
+    <div class="admin-nav">
+      <h2>🌶️ Spice Crowd Admin</h2>
+      <button class="btn-admin-close" onclick="closeAdmin()">✕ Exit</button>
+    </div>
+    <div class="admin-body">
+      <div class="admin-stats" id="admin-stats"></div>
+      <div class="admin-section-title">Recent Orders</div>
+      <div class="admin-orders" id="admin-orders"></div>
+      <div class="admin-section-title">Inventory</div>
+      <div class="admin-inventory" id="admin-inventory"></div>
+    </div>
+  </div>
+</div>
+"""
+
+# ── PART 2 JS ──
+PART2_JS = """
+// ══════════════════════════════════════
+// PART 2 — SECTIONS + ADMIN
+// ══════════════════════════════════════
+
+const SECS_FULL=[
+  'hero','pepper','cloves','bayleaf','cinnamon',
+  'benefits','gallery','origin','specs','reviews',
+  'faq','related','trust','delivery','about','track'
+];
+
+// Remap goSec to handle all sections
+const _goSec = goSec;
+function goSec(sec){
+  if(['hero','pepper','cloves','bayleaf','cinnamon'].includes(sec)){
+    _goSec(sec); return;
+  }
+  if(busy) return; busy=true;
+  curSec=sec;
+  const ph=document.getElementById('p-hero');
+  const ps=document.getElementById('p-spice');
+  ph.style.opacity='0'; ph.style.transform='translateY(-20px)'; ph.style.pointerEvents='none';
+  ps.classList.remove('vis'); ps.style.display='none';
+  document.querySelectorAll('.section-page').forEach(p=>p.classList.remove('vis'));
+  const target=document.getElementById('p-'+sec);
+  if(target){
+    bgH.style.opacity='0';
+    bgC.style.background=secBG(sec);
+    bgO.style.background='linear-gradient(135deg,rgba(4,3,1,.88),rgba(3,2,1,.7))';
+    navEl.classList.add('scrolled');
+    target.classList.add('vis');
+    if(sec==='reviews') animReviews();
+    if(sec==='faq') renderFAQ();
+    if(sec==='related') renderRelated();
+    if(sec==='gallery') renderGallery('all');
+    updDots2(sec);
+  }
+  setTimeout(()=>{ busy=false; },420);
+}
+
+function secBG(sec){
+  const map={
+    benefits:'radial-gradient(ellipse at 50% 50%,#0e1f0a 0%,#060e04 55%,#020502 100%)',
+    gallery:'radial-gradient(ellipse at 50% 50%,#1a1000 0%,#0a0600 55%,#030200 100%)',
+    origin:'radial-gradient(ellipse at 50% 50%,#0a1a0c 0%,#050e06 55%,#020402 100%)',
+    specs:'radial-gradient(ellipse at 50% 50%,#0d0a1a 0%,#060408 55%,#020203 100%)',
+    reviews:'radial-gradient(ellipse at 50% 50%,#1a1200 0%,#0a0800 55%,#030200 100%)',
+    faq:'radial-gradient(ellipse at 50% 50%,#0a1010 0%,#050808 55%,#020303 100%)',
+    related:'radial-gradient(ellipse at 50% 50%,#1a0e0e 0%,#0a0606 55%,#030202 100%)',
+    trust:'radial-gradient(ellipse at 50% 50%,#0d1a0e 0%,#060e07 55%,#020402 100%)',
+    delivery:'radial-gradient(ellipse at 50% 50%,#0a1215 0%,#050a0c 55%,#020304 100%)',
+    about:'radial-gradient(ellipse at 50% 50%,#0d1a0e 0%,#060e07 55%,#020402 100%)',
+    track:'radial-gradient(ellipse at 50% 50%,#100a1a 0%,#080610 55%,#030203 100%)',
+  };
+  return map[sec]||'radial-gradient(ellipse,#111 0%,#040404 100%)';
+}
+
+// Extended dots
+function updDots2(sec){
+  const allNd=document.querySelectorAll('.nd');
+  allNd.forEach(d=>d.classList.remove('on'));
+}
+
+// ── NAV LINKS UPDATE ──
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  const txt=a.textContent.trim().toLowerCase();
+  if(txt==='about') a.onclick=(e)=>{e.preventDefault();goSec('about');};
+  if(txt==='origin') a.onclick=(e)=>{e.preventDefault();goSec('origin');};
+  if(txt==='reviews') a.onclick=(e)=>{e.preventDefault();goSec('reviews');};
+});
+
+// ── GALLERY DATA ──
+const GALLERY_IMGS={
+  pepper:[
+    {url:'https://images.unsplash.com/photo-1599909631372-7ef59b3e7c37?w=600&q=80',cap:'Black Pepper — Kolli Hills'},
+    {url:'https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=600&q=80',cap:'Pepper on the vine'},
+    {url:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',cap:'Harvesting at 1300m'},
+  ],
+  cloves:[
+    {url:'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=600&q=80',cap:'Whole Cloves — Aromatic Grade'},
+    {url:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80',cap:'Clove harvest'},
+    {url:'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=600&q=80',cap:'Sorting and grading'},
+  ],
+  bayleaf:[
+    {url:'https://images.unsplash.com/photo-1595587870672-c79b47875c6a?w=600&q=80',cap:'Biryani Leaves — Wild Harvest'},
+    {url:'https://images.unsplash.com/photo-1587334907963-4c3dc3dd0f3e?w=600&q=80',cap:'Forest-grown bay leaves'},
+    {url:'https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=600&q=80',cap:'Slow drying process'},
+  ],
+  cinnamon:[
+    {url:'https://images.unsplash.com/photo-1608744982600-d7f0edc53d95?w=600&q=80',cap:'True Cinnamon — Ceylon Grade'},
+    {url:'https://images.unsplash.com/photo-1519668752166-ebdbfe986e26?w=600&q=80',cap:'Hand-peeled cinnamon bark'},
+    {url:'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&q=80',cap:'Sun drying at the farm'},
+  ],
+};
+
+function switchGallery(type, el){
+  document.querySelectorAll('.gtab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  renderGallery(type);
+}
+
+function renderGallery(type){
+  const grid=document.getElementById('gallery-grid');
+  let imgs=[];
+  if(type==='all') Object.values(GALLERY_IMGS).forEach(arr=>imgs.push(...arr));
+  else imgs=GALLERY_IMGS[type]||[];
+  grid.innerHTML=imgs.map(i=>`
+    <div>
+      <img class="gallery-img" src="${i.url}" alt="${i.cap}" onerror="this.src='https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80'">
+      <div class="gallery-cap">${i.cap}</div>
+    </div>`).join('');
+}
+
+// ── REVIEWS DATA ──
+const REVIEWS=[
+  {name:'Priya Sharma',loc:'Chennai, TN',product:'Black Pepper',stars:5,text:'The black pepper is incredibly fresh and aromatic. You can taste the difference from store-bought immediately. My sambar has never tasted better!',date:'2 weeks ago'},
+  {name:'Arjun Nair',loc:'Kochi, Kerala',product:'Cinnamon',stars:5,text:'True Ceylon cinnamon — you can smell the difference the moment you open the pack. My chai has been completely transformed.',date:'1 month ago'},
+  {name:'Kavitha Rajan',loc:'Bangalore, KA',product:'Biryani Leaves',stars:5,text:'My biryani smells completely different now. The leaves are thick, fragrant and fresh — nothing like the brown dried ones from supermarkets.',date:'3 weeks ago'},
+  {name:'Mohammed Irfan',loc:'Hyderabad, TS',product:'Cloves',stars:5,text:'Amazing quality cloves. Rich in oil, strong aroma. My mother-in-law approved of my biryani for the first time and that says everything!',date:'1 week ago'},
+  {name:'Deepa Krishnan',loc:'Coimbatore, TN',product:'Black Pepper',stars:4,text:'Freshness is unmatched. The packaging is beautiful too. Slightly expensive but absolutely worth every rupee for the quality.',date:'2 months ago'},
+  {name:'Suresh Babu',loc:'Madurai, TN',product:'Cinnamon',stars:5,text:'I bought as a gift for my sister. She called me immediately to say how good it smells! The packaging is genuinely premium.',date:'3 weeks ago'},
+  {name:'Anitha Menon',loc:'Trivandrum, KL',product:'Cloves',stars:5,text:'The cloves here are in a completely different league. Dense, oily, and the aroma fills the entire kitchen. From the right source!',date:'1 month ago'},
+  {name:'Vikram Selvam',loc:'Salem, TN',product:'Biryani Leaves',stars:4,text:'Great quality bay leaves. Love that they mention the exact origin — Kolli Hills is barely 2 hours from my hometown. So fresh!',date:'5 days ago'},
+  {name:'Rekha Iyer',loc:'Pune, MH',product:'Black Pepper',stars:5,text:'I was skeptical about premium spices but this changed my mind completely. The pepper is strong, fresh and absolutely pure.',date:'1 month ago'},
+  {name:'Karthik Raja',loc:'Delhi, DL',product:'Cinnamon',stars:5,text:'Best cinnamon I have had outside of Kerala. Soft bark, sweet smell, dissolves beautifully in hot milk. Will reorder every month.',date:'2 weeks ago'},
+  {name:'Meena Sundaram',loc:'Tirunelveli, TN',product:'Cloves',stars:5,text:'As someone from Tamil Nadu I know my spices. These cloves are from the real hills — you can taste the terroir in every bite.',date:'1 week ago'},
+  {name:'Rohit Pillai',loc:'Mumbai, MH',product:'Biryani Leaves',stars:4,text:'Delivered fast, packed well. The leaves are green and fragrant unlike the brown dusty ones I used to buy from the market.',date:'3 days ago'},
+];
+
+function animReviews(){
+  document.getElementById('rev-grid').innerHTML=REVIEWS.map(r=>`
+    <div class="rev-card">
+      <div class="rc-top">
+        <div><div class="rc-name">${r.name}</div><div class="rc-loc">${r.loc}</div></div>
+        <div class="rc-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
+      </div>
+      <div class="rc-verified">✓ Verified Purchase</div>
+      <div class="rc-product">${r.product}</div>
+      <div class="rc-text">${r.text}</div>
+      <div class="rc-date">${r.date}</div>
+    </div>`).join('');
+}
+
+// ── FAQ ──
+const FAQS=[
+  {q:'Are your spices 100% organic and additive-free?',a:'Yes, absolutely. All Spice Crowd spices are grown without pesticides or chemical fertilisers. We add zero preservatives, colours, or additives. What you receive is exactly what comes from the farm.'},
+  {q:'Where exactly are the spices sourced from?',a:'All our spices are sourced exclusively from Kolli Hills, Namakkal District, Tamil Nadu — situated at 1300 metres above sea level in the Eastern Ghats. The high elevation and mist create uniquely potent spices.'},
+  {q:'How is Spice Crowd different from supermarket spices?',a:'Supermarket spices often sit in warehouses for 1–2 years before reaching you. Spice Crowd packs fresh after every harvest and ships directly. You get spices that are months, not years, old.'},
+  {q:'What is your delivery time?',a:'Orders placed before 2 PM ship the same day. Standard delivery takes 3–5 business days across India. Express 1–2 day delivery is also available at checkout.'},
+  {q:'Do you offer free shipping?',a:'Yes! Free shipping on all orders above ₹499. A flat ₹60 shipping charge applies to orders below ₹499.'},
+  {q:'What is your return policy?',a:'We offer a 7-day hassle-free return policy. If you receive a damaged product or are unsatisfied with quality, we will replace it or refund fully — no questions asked.'},
+  {q:'Are the spices FSSAI certified?',a:'Yes. Spice Crowd is fully FSSAI licensed (Lic. No. 12426998000062) and GST registered (GSTIN: 33FFIPS5308F1ZE). Every batch is independently lab-tested for purity.'},
+  {q:'How should I store the spices?',a:'Store in a cool, dry place away from direct sunlight and moisture. Keep the zipper pouch sealed tightly after each use. Properly stored spices last their full shelf life of 18–36 months.'},
+];
+
+function renderFAQ(){
+  document.getElementById('faq-wrap').innerHTML=FAQS.map((f,i)=>`
+    <div class="faq-item" id="faq-${i}">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        <div class="faq-q-txt">${f.q}</div>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a"><p>${f.a}</p></div>
+    </div>`).join('');
+}
+function toggleFAQ(i){
+  const el=document.getElementById('faq-'+i);
+  el.classList.toggle('open');
+}
+
+// ── RELATED ──
+function renderRelated(){
+  const items=[
+    {name:'Black Pepper',price:'From ₹199',img:PROD_IMG,sec:'pepper'},
+    {name:'Whole Cloves',price:'From ₹149',img:PROD_IMG,sec:'cloves'},
+    {name:'Biryani Leaves',price:'From ₹99',img:PROD_IMG,sec:'bayleaf'},
+    {name:'True Cinnamon',price:'From ₹199',img:PROD_IMG,sec:'cinnamon'},
+  ];
+  document.getElementById('related-grid').innerHTML=items.map(i=>`
+    <div class="related-card" onclick="goSec('${i.sec}')">
+      <img class="rc-img" src="${i.img}" alt="${i.name}">
+      <div class="rc-name">${i.name}</div>
+      <div class="rc-price">${i.price}</div>
+      <button class="btn-rel">View Product →</button>
+    </div>`).join('');
+}
+
+// ── TRACK ORDER ──
+function trackOrder(){
+  const id=document.getElementById('track-in').value.trim().toUpperCase();
+  if(!id){ alert('Please enter your Order ID'); return; }
+  const result=document.getElementById('track-result');
+  const details=document.getElementById('track-details');
+  result.classList.add('show');
+  details.innerHTML=`
+    <div class="td-row"><span>Order ID</span><span>${id}</span></div>
+    <div class="td-row"><span>Status</span><span style="color:var(--gold)">Shipped — In Transit</span></div>
+    <div class="td-row"><span>Shipped On</span><span>${new Date(Date.now()-86400000*2).toLocaleDateString('en-IN')}</span></div>
+    <div class="td-row"><span>Expected Delivery</span><span style="color:#6dbf6d">${new Date(Date.now()+86400000*2).toLocaleDateString('en-IN',{weekday:'long',month:'short',day:'numeric'})}</span></div>
+    <div class="td-row"><span>Courier</span><span>DTDC Express</span></div>
+    <div class="td-row"><span>Tracking No.</span><span>DTDC${Math.floor(Math.random()*9000000+1000000)}</span></div>
+  `;
+}
+
+// ── ADMIN ──
+let adminLoggedIn=false;
+const ADMIN_PWD='Spice@01()';
+const mockOrders=[
+  {id:'SC-AB7X2K',name:'Priya Sharma',items:'Black Pepper 100g × 2',amt:698,status:'delivered'},
+  {id:'SC-CD9M4P',name:'Arjun Kumar',items:'Cinnamon 100g, Cloves 50g',amt:658,status:'shipped'},
+  {id:'SC-EF3N8Q',name:'Kavitha R',items:'Biryani Leaves 50g × 3',amt:597,status:'placed'},
+  {id:'SC-GH5J1R',name:'Mohammed I',items:'Black Pepper 250g',amt:799,status:'delivered'},
+  {id:'SC-IK2L6S',name:'Deepa M',items:'Cinnamon 200g, Pepper 50g',amt:898,status:'shipped'},
+  {id:'SC-MN4P3T',name:'Suresh B',items:'Cloves 100g × 2',amt:858,status:'placed'},
+];
+const mockInv=[
+  {name:'Black Pepper',variants:{p50:142,p100:87,p250:34}},
+  {name:'Whole Cloves',variants:{p25:203,p50:118,p100:56}},
+  {name:'Biryani Leaves',variants:{p20:167,p50:92,p100:41}},
+  {name:'True Cinnamon',variants:{p50:134,p100:78,p200:29}},
+];
+
+function openAdmin(){ document.getElementById('admin-ov').classList.add('open'); }
+function closeAdmin(){
+  document.getElementById('admin-ov').classList.remove('open');
+  document.getElementById('admin-pass').value='';
+  document.getElementById('admin-err').classList.remove('show');
+  if(!adminLoggedIn){ document.getElementById('admin-login').style.display='flex'; document.getElementById('admin-dash').classList.remove('show'); }
+}
+function adminLogin(){
+  const pw=document.getElementById('admin-pass').value;
+  if(pw===ADMIN_PWD){ adminLoggedIn=true; showAdminDash(); }
+  else { document.getElementById('admin-err').classList.add('show'); }
+}
+function showAdminDash(){
+  document.getElementById('admin-login').style.display='none';
+  document.getElementById('admin-dash').classList.add('show');
+  const totalRev=mockOrders.reduce((s,o)=>s+o.amt,0);
+  const placed=mockOrders.filter(o=>o.status==='placed').length;
+  const shipped=mockOrders.filter(o=>o.status==='shipped').length;
+  const delivered=mockOrders.filter(o=>o.status==='delivered').length;
+  document.getElementById('admin-stats').innerHTML=`
+    <div class="astat"><strong>₹${totalRev.toLocaleString()}</strong><span>Total Revenue</span></div>
+    <div class="astat"><strong>${mockOrders.length}</strong><span>Total Orders</span></div>
+    <div class="astat"><strong>${shipped}</strong><span>In Transit</span></div>
+    <div class="astat"><strong>${delivered}</strong><span>Delivered</span></div>
+  `;
+  document.getElementById('admin-orders').innerHTML=mockOrders.map((o,i)=>`
+    <div class="ao">
+      <div class="ao-id">${o.id}</div>
+      <div class="ao-info"><div class="ao-name">${o.name}</div><div class="ao-items">${o.items}</div></div>
+      <div class="ao-amt">₹${o.amt}</div>
+      <div class="ao-status ${o.status}">${o.status.charAt(0).toUpperCase()+o.status.slice(1)}</div>
+      <div class="ao-actions">
+        ${o.status==='placed'?`<button class="btn-ao" onclick="updOrder(${i},'shipped')">Mark Shipped</button>`:''}
+        ${o.status==='shipped'?`<button class="btn-ao" onclick="updOrder(${i},'delivered')">Mark Delivered</button>`:''}
+      </div>
+    </div>`).join('');
+  document.getElementById('admin-inventory').innerHTML=mockInv.map(inv=>`
+    <div class="inv-card">
+      <div class="inv-name">${inv.name}</div>
+      ${Object.entries(inv.variants).map(([k,v])=>`<div class="inv-row"><span>${k.replace('p','')+'g'}</span><span>${v} units</span></div>`).join('')}
+    </div>`).join('');
+}
+function updOrder(i,status){
+  mockOrders[i].status=status;
+  showAdminDash();
+}
+
+// Secret admin shortcut: type 'admin' anywhere
+let adminKeys='';
+document.addEventListener('keydown',e=>{
+  adminKeys+=e.key;
+  if(adminKeys.includes('admin')){ openAdmin(); adminKeys=''; }
+  if(adminKeys.length>10) adminKeys='';
+});
+
+// ── EXTENDED NAV DOTS ──
+// Add extra dots for part 2 sections
+const ndotsEl=document.getElementById('ndots');
+const p2secs=['benefits','gallery','origin','specs','reviews','faq','related','trust','delivery','about','track'];
+p2secs.forEach(sec=>{
+  const d=document.createElement('div');
+  d.className='nd'; d.title=sec;
+  d.onclick=()=>goSec(sec);
+  ndotsEl.appendChild(d);
+});
+
+// ── WHEEL SCROLL UPDATE FOR ALL SECS ──
+window.removeEventListener('wheel',window._wheelHandler||function(){},{passive:true});
+let wc2=false;
+window.addEventListener('wheel',e=>{
+  if(wc2||busy) return; wc2=true; setTimeout(()=>{ wc2=false; },550);
+  const all=SECS_FULL;
+  const i=all.indexOf(curSec);
+  if(e.deltaY>25&&i<all.length-1) goSec(all[i+1]);
+  else if(e.deltaY<-25&&i>0) goSec(all[i-1]);
+},{passive:true});
+
+// Update touch for all secs
+let ts2=0;
+window.addEventListener('touchstart',e=>{ts2=e.touches[0].clientY;},{passive:true});
+window.addEventListener('touchend',e=>{
+  const d=ts2-e.changedTouches[0].clientY;
+  if(Math.abs(d)<40) return;
+  window.dispatchEvent(new WheelEvent('wheel',{deltaY:d>0?60:-60}));
+});
+
+// Inject PROD_IMG reference
+const PROD_IMG_REF='PROD_SRC_REF';
+""".replace('PROD_SRC_REF', PROD)
+
+# Inject CSS before </style>
+html = html.replace('</style>', PART2_CSS + '</style>', 1)
+
+# Inject HTML before </div> that closes #stage, then admin after stage
+# Find the closing of stage div
+stage_close = '<!-- PAYMENT MODAL -->'
+html = html.replace(stage_close, PART2_HTML.replace('HILLS_SRC', HILLS).replace('LOGO_SRC', LOGO) + '\n' + stage_close, 1)
+
+# Inject JS before </script>
+html = html.replace('// ── INIT ──\ndocument.getElementById(\'bg-hills\').style.backgroundImage="url(\'HILLS_SRC\')";\ngoSec(\'hero\');',
+    PART2_JS + '\n// ── INIT ──\ndocument.getElementById(\'bg-hills\').style.backgroundImage="url(\'" + HILLS + "\')";\ngoSec(\'hero\');', 1)
+
+with open('/mnt/user-data/outputs/spicecrowd-v5-final.html','w') as f:
+    f.write(html)
+
+print('Done! Final size:', len(html))
+PYEOF
+
+python3 /tmp/build_part2.py
