@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Crowd - Authentic Spices From India</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- DESIGN VARIABLES & SYSTEM --- */
+        :root {
+            --primary-green: #0b4226;
+            --accent-gold: #cda032;
+            --text-dark: #1a1a1a;
+            --text-muted: #555555;
+            --bg-light: #f9f9f9;
+            --bg-white: #ffffff;
+            --border-color: #e5e7eb;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-accent {
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+        }
+
+        .btn-accent:hover {
+            opacity: 0.9;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 36px;
+            text-align: center;
+            color: var(--primary-green);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        /* --- ANNOUNCEMENT BAR --- */
+        .announcement-bar {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .announcement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 10fr);
+            text-align: center;
+        }
+
+        .announcement-item i {
+            color: var(--accent-gold);
+            margin-right: 6px;
+        }
+
+        /* --- HEADER NAVIGATION --- */
+        header {
+            background-color: var(--bg-white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 90px;
+        }
+
+        .logo img {
+            height: 70px;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-green);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .action-icon {
+            font-size: 18px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-icon:hover {
+            color: var(--primary-green);
+        }
+
+        .cart-trigger-btn {
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+            padding: 0 24px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            margin-right: -24px;
+        }
+
+        .cart-count {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+            font-size: 12px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        /* --- HERO SECTION --- */
+        #home {
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('image.png') no-repeat center center/cover;
+            min-height: calc(100vh - 120px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--bg-white);
+            padding: 60px 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-logo {
+            max-width: 320px;
+            margin-bottom: 24px;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-serif);
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+
+        /* --- PRODUCT GRID CATALOG --- */
+        .catalog-section {
+            padding: 80px 0;
+            background-color: var(--bg-light);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .product-card-img {
+            height: 260px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+
+        .product-card-info {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-card-info h3 {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            color: var(--primary-green);
+            margin-bottom: 8px;
+        }
+
+        .product-card-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .product-card-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-top: auto;
+            margin-bottom: 16px;
+        }
+
+        /* --- PRODUCT PAGE OVERLAY / SECTIONS --- */
+        .product-detail-section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-white);
+        }
+
+        .product-showcase-container {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        /* Left Showcase Gallery */
+        .gallery-wrapper {
+            display: flex;
+            gap: 16px;
+        }
+
+        .thumbs-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .thumb-box {
+            width: 70px;
+            height: 70px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: var(--bg-light);
+        }
+
+        .thumb-box.active {
+            border-color: var(--primary-green);
+            border-width: 2px;
+        }
+
+        .thumb-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-image-frame {
+            flex-grow: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            position: relative;
+            background-color: var(--bg-light);
+            height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-100-natural {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-green);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Right Product Specs */
+        .specs-column .best-seller-badge {
+            background-color: #fef3c7;
+            color: #d97706;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .specs-column h2 {
+            font-family: var(--font-serif);
+            font-size: 42px;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .specs-column .origin-line {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .specs-column .product-description {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .stars {
+            color: var(--accent-gold);
+        }
+
+        .price-row {
+            margin-bottom: 24px;
+        }
+
+        .price-row .main-price {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .price-row .weight-marker {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .features-pill-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .feature-pill {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-green);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .weight-selector-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .weight-options-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .weight-option-card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 14px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .weight-option-card.active {
+            border-color: var(--primary-green);
+            background-color: rgba(11, 66, 38, 0.02);
+            border-width: 2px;
+        }
+
+        .weight-option-card .weight-label {
+            font-weight: 700;
+            font-size: 16px;
+            display: block;
+        }
+
+        .weight-option-card .weight-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: block;
+            margin: 2px 0 6px;
+        }
+
+        .weight-option-card .weight-price {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .weight-option-card .discount-tag {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 2px;
+            white-space: nowrap;
+        }
+
+        .purchase-buttons-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .trust-badges-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 24px;
+        }
+
+        .trust-badge-item {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .trust-badge-item i {
+            display: block;
+            font-size: 18px;
+            color: var(--primary-green);
+            margin-bottom: 6px;
+        }
+
+        /* Bottom Product Benefits Section */
+        .benefits-navbar {
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 50px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 40px;
+            overflow-x: auto;
+        }
+
+        .benefits-nav-link {
+            padding-bottom: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+
+        .benefits-nav-link.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+
+        .benefits-cards-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .benefit-info-card {
+            background-color: var(--bg-light);
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .benefit-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            background-color: var(--bg-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            color: var(--primary-green);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .benefit-info-card h4 {
+            font-size: 14px;
+            color: var(--primary-green);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .benefit-info-card p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* --- OUR STORY SECTION --- */
+        #our-story {
+            padding: 100px 0;
+            background-color: var(--bg-white);
+        }
+
+        .story-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .story-img-container {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 450px;
+            background-color: var(--bg-light);
+        }
+
+        .story-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .story-text h2 {
+            font-family: var(--font-serif);
+            font-size: 42px;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        .story-text p {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        /* --- REVIEWS & FAQ SECTION --- */
+        #reviews-faq {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+        }
+
+        .reviews-container {
+            margin-bottom: 60px;
+        }
+
+        .reviews-slider-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .review-card {
+            background-color: var(--bg-white);
+            padding: 30px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color);
+        }
+
+        .review-card .stars {
+            margin-bottom: 12px;
+        }
+
+        .review-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .review-card .author {
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        /* FAQ Accordion */
+        .faq-max-width {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            margin-bottom: 12px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .faq-header {
+            padding: 20px 24px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .faq-content {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .faq-item.open .faq-content {
+            padding-bottom: 20px;
+            max-height: 200px;
+        }
+
+        .faq-item.open .faq-header i {
+            transform: rotate(180deg);
+        }
+
+        /* --- CONTACT US & FOOTER --- */
+        #contact-footer {
+            background-color: #111111;
+            color: #ffffff;
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 50px;
+            border-bottom: 1px solid #222222;
+            padding-bottom: 50px;
+            margin-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            color: var(--accent-gold);
+        }
+
+        .footer-col p {
+            color: #999999;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .footer-form input, .footer-form textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: #222222;
+            border: 1px solid #333333;
+            color: white;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-family: var(--font-sans);
+        }
+
+        .footer-form button {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #666666;
+        }
+
+        /* --- CART DRAWER SYSTEM --- */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .cart-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            background-color: var(--bg-white);
+            z-index: 1001;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            transition: cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-overlay.open .cart-drawer {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-items-container {
+            flex-grow: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .cart-empty-message {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 40px;
+        }
+
+        .cart-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-light);
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        /* --- RESPONSIVE FIXES --- */
+        @media(max-width: 1024px) {
+            .product-showcase-container, .story-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .benefits-cards-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .reviews-slider-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 768px) {
+            .announcement-grid {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+            nav {
+                display: none; /* In production, replace with a mobile hamburger */
+            }
+            .benefits-cards-row {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ANNOUNCEMENT BAR -->
+    <div class="announcement-bar">
+        <div class="container announcement-grid">
+            <div class="announcement-item"><i class="fa-solid fa-truck"></i> Free Shipping on Orders Above ₹499</div>
+            <div class="announcement-item"><i class="fa-solid fa-leaf"></i> 100% Natural & Farm Fresh Spices</div>
+            <div class="announcement-item"><i class="fa-solid fa-location-dot"></i> Proudly from Kolli Hills, Tamil Nadu</div>
+        </div>
+    </div>
+
+    <!-- MAIN STICKY HEADER -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo" onclick="window.scrollTo(0,0)">
+                <img src="image_3.png" alt="Spice Crowd Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#catalog">Products</a></li>
+                    <li><a href="#our-story">Our Story</a></li>
+                    <li><a href="#reviews-faq">Reviews & FAQ</a></li>
+                    <li><a href="#contact-footer">Contact Us</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <i class="fa-solid fa-magnifying-glass action-icon"></i>
+                <i class="fa-solid fa-user action-icon"></i>
+                <button class="cart-trigger-btn" onclick="toggleCart(true)">
+                    <i class="fa-solid fa-cart-shopping"></i> Cart <span class="cart-count" id="global-cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: HOME (HERO) -->
+    <section id="home">
+        <div class="hero-content">
+            <img src="image_3.png" alt="Spice Crowd Central Logo" class="hero-logo">
+            <h1>Authentic Spices From India</h1>
+            <p>Handpicked, sun-dried premium spices sourced directly from pristine organic farms straight to your pantry.</p>
+            <a href="#catalog" class="btn btn-accent">Explore Catalog</a>
+        </div>
+    </section>
+
+    <!-- PRODUCT CATALOG TRIGGER ANCHOR -->
+    <div id="catalog"></div>
+
+    <!-- CORE PRODUCT VIEW ADAPTIONS LAYER -->
+    <!-- SECTION 2: BLACK PEPPER -->
+    <section id="black-pepper" class="product-detail-section">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper">
+                    <div class="thumbs-column">
+                        <div class="thumb-box active"><img src="image_2.png" alt="Black Pepper Main Pack"></div>
+                        <div class="thumb-box"><img src="image_2.png" alt="Pepper View 2"></div>
+                        <div class="thumb-box"><img src="image_2.png" alt="Pepper View 3"></div>
+                    </div>
+                    <div class="main-image-frame">
+                        <img src="image_2.png" alt="Premium Black Pepper Packaging Representation">
+                        <div class="badge-100-natural"><i class="fa-solid fa-leaf"></i> 100% Natural</div>
+                    </div>
+                </div>
+                <div class="specs-column">
+                    <span class="best-seller-badge">Best Seller</span>
+                    <h2>Black Pepper</h2>
+                    <p class="origin-line">Single Origin &bull; Handpicked &bull; Sun Dried</p>
+                    <p class="product-description">Grown in the pristine hills of Kolli, our black pepper delivers a bold aroma, rich flavor, and unmatched purity perfect for regular culinary enhancements.</p>
+                    <div class="rating-row">
+                        <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                        <span><strong>4.9</strong> (2,000+ Reviews)</span>
+                        <span>|</span>
+                        <span>15,000+ Happy Customers</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="main-price">₹199</span> <span class="weight-marker">(250g)</span>
+                    </div>
+                    <div class="weight-selector-title">Choose Weight</div>
+                    <div class="weight-options-grid">
+                        <div class="weight-option-card active">
+                            <span class="weight-label">250g</span>
+                            <span class="weight-desc">Best for Trying</span>
+                            <span class="weight-price">₹199</span>
+                        </div>
+                        <div class="weight-option-card">
+                            <span class="discount-tag">MOST POPULAR</span>
+                            <span class="weight-label">500g</span>
+                            <span class="weight-desc">Great for Family</span>
+                            <span class="weight-price">₹349</span>
+                        </div>
+                        <div class="weight-option-card">
+                            <span class="discount-tag">SAVE 18%</span>
+                            <span class="weight-label">1kg</span>
+                            <span class="weight-desc">Best Value Pack</span>
+                            <span class="weight-price">₹649</span>
+                        </div>
+                    </div>
+                    <div class="purchase-buttons-row">
+                        <button class="btn btn-primary" onclick="addToCart('Black Pepper (250g)', 199)"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
+                        <button class="btn btn-accent"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                    </div>
+                    <div class="trust-badges-bar">
+                        <div class="trust-badge-item"><i class="fa-solid fa-shield-halved"></i> Secure Payment</div>
+                        <div class="trust-badge-item"><i class="fa-solid fa-truck-fast"></i> Fast Delivery</div>
+                        <div class="trust-badge-item"><i class="fa-solid fa-rotate-left"></i> Easy Returns</div>
+                        <div class="trust-badge-item"><i class="fa-solid fa-seedling"></i> Farm Direct</div>
+                    </div>
+                </div>
+            </div>
+            <div class="benefits-navbar">
+                <div class="benefits-nav-link active">Product Benefits</div>
+                <div class="benefits-nav-link">Specifications</div>
+                <div class="benefits-nav-link">Origin Story</div>
+                <div class="benefits-nav-link">FSSAI Compliance</div>
+            </div>
+            <div class="benefits-cards-row">
+                <div class="benefit-info-card">
+                    <div class="benefit-icon-wrapper"><i class="fa-solid fa-mortar-pestle"></i></div>
+                    <h4>Bold & Rich Aroma</h4>
+                    <p>Adds a strong, natural aroma that enhances every single recipe.</p>
+                </div>
+                <div class="benefit-info-card">
+                    <div class="benefit-icon-wrapper"><i class="fa-solid fa-cubes"></i></div>
+                    <h4>High Piperine Content</h4>
+                    <p>More piperine means significantly better flavor and punchy heat profile.</p>
+                </div>
+                <div class="benefit-info-card">
+                    <div class="benefit-icon-wrapper"><i class="fa-solid fa-seedling"></i></div>
+                    <h4>100% Pure & Natural</h4>
+                    <p>Absolutely no added synthetic chemicals, additives, fillers, or colors.</p>
+                </div>
+                <div class="benefit-info-card">
+                    <div class="benefit-icon-wrapper"><i class="fa-solid fa-hands-holding"></i></div>
+                    <h4>Handpicked Quality</h4>
+                    <p>Carefully selected and cleaned by local farmers for premium grading.</p>
+                </div>
+                <div class="benefit-info-card">
+                    <div class="benefit-icon-wrapper"><i class="fa-solid fa-plus-medical"></i></div>
+                    <h4>Supports Immunity</h4>
+                    <p>Naturally packed with vital antioxidants boosting physical wellness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: CLOVES -->
+    <section id="cloves" class="product-detail-section" style="background-color: var(--bg-light);">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper">
+                    <div class="main-image-frame" style="height: 400px;">
+                        <span style="color: var(--text-muted); font-weight: 600;">[ Cloves Image Placeholder ]</span>
+                    </div>
+                </div>
+                <div class="specs-column">
+                    <h2>Premium Cloves</h2>
+                    <p class="origin-line">Handpicked Flower Buds &bull; Pure & Bold</p>
+                    <p class="product-description">Our highly aromatic cloves are harvested at full maturity, yielding deep pungent spice profiles loaded with rich natural oil properties.</p>
+                    <div class="price-row"><span class="main-price">₹249</span> <span class="weight-marker">(200g)</span></div>
+                    <button class="btn btn-primary" onclick="addToCart('Premium Cloves (200g)', 249)">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: BAY LEAF -->
+    <section id="bay-leaf" class="product-detail-section">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper">
+                    <div class="main-image-frame" style="height: 400px;">
+                        <span style="color: var(--text-muted); font-weight: 600;">[ Bay Leaf Image Placeholder ]</span>
+                    </div>
+                </div>
+                <div class="specs-column">
+                    <h2>Premium Bay Leaves</h2>
+                    <p class="origin-line">Whole Selection &bull; Sun Dried</p>
+                    <p class="product-description">Grown using traditional methods, these whole bay leaves deliver deep flavor layers into Indian curries, soups, and traditional pulav preparations.</p>
+                    <div class="price-row"><span class="main-price">₹100</span> <span class="weight-marker">(100g)</span></div>
+                    <button class="btn btn-primary" onclick="addToCart('Bay Leaf (100g)', 100)">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CINNAMON -->
+    <section id="cinnamon" class="product-detail-section" style="background-color: var(--bg-light);">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper">
+                    <div class="main-image-frame" style="height: 400px;">
+                        <span style="color: var(--text-muted); font-weight: 600;">[ Cinnamon Image Placeholder ]</span>
+                    </div>
+                </div>
+                <div class="specs-column">
+                    <h2>Ceylon Cinnamon</h2>
+                    <p class="origin-line">True Sweet Bark &bull; Exquisite Grade</p>
+                    <p class="product-description">Highly delicate inner bark layers offering unique sweetness and complex woody flavors without the intense harshness of regular cassia.</p>
+                    <div class="price-row"><span class="main-price">₹299</span> <span class="weight-marker">(150g)</span></div>
+                    <button class="btn btn-primary" onclick="addToCart('Cinnamon (150g)', 299)">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: CARDAMOM -->
+    <section id="cardamom" class="product-detail-section">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper">
+                    <div class="main-image-frame" style="height: 400px;">
+                        <span style="color: var(--text-muted); font-weight: 600;">[ Cardamom Image Placeholder ]</span>
+                    </div>
+                </div>
+                <div class="specs-column">
+                    <h2>Green Cardamom</h2>
+                    <p class="origin-line">8mm Bold Pods &bull; Intensely Fragrant</p>
+                    <p class="product-description">The supreme pod configuration showcasing strong sweet profiles, crisp emerald green outer layers, and maximum inner seed density.</p>
+                    <div class="price-row"><span class="main-price">₹399</span> <span class="weight-marker">(100g)</span></div>
+                    <button class="btn btn-primary" onclick="addToCart('Green Cardamom (100g)', 399)">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: COFFEE POWDER -->
+    <section id="coffee-powder" class="product-detail-section" style="background-color: var(--bg-light);">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper">
+                    <div class="main-image-frame" style="height: 400px;">
+                        <span style="color: var(--text-muted); font-weight: 600;">[ Coffee Powder Image Placeholder ]</span>
+                    </div>
+                </div>
+                <div class="specs-column">
+                    <h2>Filter Coffee Powder</h2>
+                    <p class="origin-line">Freshly Roasted Arabica &bull; Traditional Chicory Blend</p>
+                    <p class="product-description">Perfectly roasted local coffee selections giving a robust morning calculation, exquisite aromatic crema, and full-bodied classic structure.</p>
+                    <div class="price-row"><span class="main-price">₹175</span> <span class="weight-marker">(250g)</span></div>
+                    <button class="btn btn-primary" onclick="addToCart('Coffee Powder (250g)', 175)">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: NUTMEG -->
+    <section id="nutmeg" class="product-detail-section">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper">
+                    <div class="main-image-frame" style="height: 400px;">
+                        <span style="color: var(--text-muted); font-weight: 600;">[ Nutmeg Image Placeholder ]</span>
+                    </div>
+                </div>
+                <div class="specs-column">
+                    <h2>Whole Nutmeg</h2>
+                    <p class="origin-line">Intact Shell Kernels &bull; Highly Fragrant</p>
+                    <p class="product-description">Premium sweet-savory nutmeg pods containing intense essential oil metrics for baking or fine savory cream seasoning adjustments.</p>
+                    <div class="price-row"><span class="main-price">₹149</span> <span class="weight-marker">(100g)</span></div>
+                    <button class="btn btn-primary" onclick="addToCart('Whole Nutmeg (100g)', 149)">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: CASHEW NUTS -->
+    <section id="cashew-nuts" class="product-detail-section" style="background-color: var(--bg-light);">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper">
+                    <div class="main-image-frame" style="height: 400px;">
+                        <span style="color: var(--text-muted); font-weight: 600;">[ Cashew Nuts Image Placeholder ]</span>
+                    </div>
+                </div>
+                <div class="specs-column">
+                    <h2>Premium Cashew Nuts</h2>
+                    <p class="origin-line">W210 Jumbo Size &bull; Buttery & Crisp</p>
+                    <p class="product-description">Beautiful uniform whole cashew pieces selected rigorously for exceptional sizing, delicious crunch thresholds, and zero processing spots.</p>
+                    <div class="price-row"><span class="main-price">₹449</span> <span class="weight-marker">(500g)</span></div>
+                    <button class="btn btn-primary" onclick="addToCart('Cashew Nuts (500g)', 449)">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: PRODUCT PLACEHOLDER #9 -->
+    <section id="placeholder-9" class="product-detail-section">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper"><div class="main-image-frame" style="height: 200px; border-style: dashed;">Coming Soon</div></div>
+                <div class="specs-column">
+                    <h2>Curated Selection Placeholder #9</h2>
+                    <p class="product-description">Expanding our line of authenticated premium Indian spice offerings soon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 11: PRODUCT PLACEHOLDER #10 -->
+    <section id="placeholder-10" class="product-detail-section" style="background-color: var(--bg-light);">
+        <div class="container">
+            <div class="product-showcase-container">
+                <div class="gallery-wrapper"><div class="main-image-frame" style="height: 200px; border-style: dashed;">Coming Soon</div></div>
+                <div class="specs-column">
+                    <h2>Curated Selection Placeholder #10</h2>
+                    <p class="product-description">Expanding our line of authenticated premium Indian spice offerings soon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 12: OUR STORY -->
+    <section id="our-story">
+        <div class="container story-wrapper">
+            <div class="story-img-container">
+                <img src="image.png" alt="Spice Crowd Farm Origins">
+            </div>
+            <div class="story-text">
+                <h2>Our Story</h2>
+                <p>Founded in 2021, Spice Crowd set out with a simple mission: to clear out the complex processing loops of commercial supply networks and bring pure, single-origin authentic Indian spices straight to your kitchens.</p>
+                <p>We work tightly alongside generational farmers in fertile zones across southern India, guaranteeing honest compensation for harvesting lines and completely organic, untampered spice products for discerning culinary homes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 13: REVIEWS & FAQ -->
+    <section id="reviews-faq">
+        <div class="container">
+            <div class="reviews-container">
+                <h2 class="section-title">Verified Customer Reviews</h2>
+                <div class="reviews-slider-grid">
+                    <div class="review-card">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p>"The aromatic level of this Black Pepper completely transformed our family curries. You instantly notice the single-origin difference!"</p>
+                        <div class="author">- Rajesh K., Chennai</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p>"Super fast logistics and clean packaging configurations. The Green Cardamom pods are incredibly fresh and fragrant."</p>
+                        <div class="author">- Priya M., Bangalore</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p>"Outstanding bay leaves and cinnamon barks. It's incredibly refreshing to find an honest spice brand with no fillers."</p>
+                        <div class="author">- Amit S., Mumbai</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-max-width">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <div class="faq-header" onclick="toggleFaq(this)">Are your spices fully organic and free of fillers? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="faq-content">Yes. Spice Crowd products are 100% natural, sorted by hand, and packed with zero artificial preservatives, anti-caking components, or synthetic color additives.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-header" onclick="toggleFaq(this)">Where are these premium spice lines sourced from? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="faq-content">We source directly from specialized agricultural hill stations across India, notably the pristine ecosystem of Kolli Hills in Tamil Nadu.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-header" onclick="toggleFaq(this)">How long does standard delivery take? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="faq-content">Orders are typical processed inside 24 hours, taking 3-7 operational business days to safely land at your delivery address.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 14: CONTACT US + FOOTER -->
+    <footer id="contact-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Spice Crowd</h4>
+                    <p>Bringing authentic premium Indian crop treasures straight to your household tables since 2021.</p>
+                    <p style="margin-top: 20px;"><i class="fa-solid fa-envelope"></i> support@spicecrowd.com</p>
+                    <p><i class="fa-solid fa-phone"></i> +91 98765 43210</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Sections</h4>
+                    <p><a href="#home" style="color: #999999; text-decoration: none;">Top/Home</a></p>
+                    <p><a href="#black-pepper" style="color: #999999; text-decoration: none;">Black Pepper Showcase</a></p>
+                    <p><a href="#our-story" style="color: #999999; text-decoration: none;">Brand History</a></p>
+                    <p><a href="#reviews-faq" style="color: #999999; text-decoration: none;">FAQs</a></p>
+                </div>
+                <div class="footer-col">
+                    <h4>Drop Us A Message</h4>
+                    <form class="footer-form" onsubmit="event.preventDefault(); alert('Message successfully logged!');">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email Address" required>
+                        <textarea rows="3" placeholder="How can we help your kitchen?" required></textarea>
+                        <button type="submit" class="btn btn-accent">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Spice Crowd. All Rights Reserved. Compliant with standard FSSAI framework rules.</p>
+                <p>Crafted with Authentic Pride</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SIDEBAR CART OVERLAY -->
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-drawer">
+            <div class="cart-header">
+                <h3>Your Cart Shopping</h3>
+                <button class="cart-close-btn" onclick="toggleCart(false)"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="cart-items-container" id="cartItemsList">
+                <div class="cart-empty-message">Your shopping cart is currently empty.</div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total-row">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotal">₹0</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="alert('Proceeding to integrated payment network layout!')">Proceed To Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLIENT INTERACTION SCRIPT WORKFLOWS -->
+    <script>
+        // Reactive App States
+        let currentCart = [];
+
+        // Simple Toggle for Cart Sidebar
+        function toggleCart(openState) {
+            const overlay = document.getElementById('cartOverlay');
+            if (openState) overlay.classList.add('open');
+            else overlay.classList.remove('open');
+        }
+
+        // Functional State Addition Logic
+        function addToCart(name, price) {
+            currentCart.push({ name, price });
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        // UI Refresh Sync
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsList');
+            const countBadge = document.getElementById('global-cart-count');
+            const subtotalText = document.getElementById('cartSubtotal');
+            
+            countBadge.innerText = currentCart.length;
+            
+            if (currentCart.length === 0) {
+                container.innerHTML = '<div class="cart-empty-message">Your shopping cart is currently empty.</div>';
+                subtotalText.innerText = '₹0';
+                return;
+            }
+            
+            let htmlContent = '';
+            let totalAmount = 0;
+            
+            currentCart.forEach((item, index) => {
+                totalAmount += item.price;
+                htmlContent += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                        <div>
+                            <div style="font-weight: 600; font-size: 14px;">${item.name}</div>
+                            <div style="font-size: 13px; color: var(--text-muted);">₹${item.price}</div>
+                        </div>
+                        <button onclick="removeItem(${index})" style="background: none; border: none; color: #dc2626; cursor: pointer; font-size: 13px;"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = htmlContent;
+            subtotalText.innerText = `₹${totalAmount}`;
+        }
+
+        function removeItem(index) {
+            currentCart.splice(index, 1);
+            updateCartUI();
+        }
+
+        // FAQ Component Accordion Collapsibility 
+        function toggleFaq(headerElement) {
+            const targetItem = headerElement.parentElement;
+            const openState = targetItem.classList.contains('open');
+            
+            // Close all items
+            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('open'));
+            
+            // Toggle clicked item
+            if (!openState) {
+                targetItem.classList.add('open');
+            }
+        }
+    </script>
+</body>
+</html>
