@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Crowd - Premium Authentic Spices</title>
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- BRAND DESIGN SYSTEM --- */
+        :root {
+            --primary-green: #0b4226;
+            --accent-gold: #cda032;
+            --text-dark: #111111;
+            --text-muted: #555555;
+            --bg-light: #f4f6f4;
+            --bg-white: #ffffff;
+            --border: #e2e8f0;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 32px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+        }
+
+        .btn-primary:hover {
+            background-color: #072d1a;
+        }
+
+        .btn-accent {
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+        }
+
+        .btn-accent:hover {
+            background-color: #b58c27;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 38px;
+            color: var(--primary-green);
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        /* --- NAVIGATION --- */
+        .announcement-bar {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 10px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .announcement-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .announcement-item i {
+            color: var(--accent-gold);
+            margin-right: 8px;
+        }
+
+        header {
+            background-color: var(--bg-white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .logo-area {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon-placeholder {
+            width: 35px;
+            height: 35px;
+            background-color: var(--primary-green);
+            border-radius: 50%;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 36px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-green);
+        }
+
+        .cart-trigger {
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+            padding: 0 24px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            margin-right: -24px;
+            transition: var(--transition);
+        }
+
+        .cart-count-badge {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+            font-size: 11px;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        /* --- HERO --- */
+        #home {
+            background: linear-gradient(rgba(11, 66, 38, 0.85), rgba(7, 45, 26, 0.9)), url('image.png') no-repeat center center/cover;
+            padding: 100px 24px;
+            text-align: center;
+            color: var(--bg-white);
+        }
+
+        .hero-inner h1 {
+            font-family: var(--font-serif);
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .hero-inner p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* --- SINGLE PAGE DYNAMIC CATALOG DESIGN --- */
+        #catalog-section {
+            padding: 60px 0 100px;
+            background-color: var(--bg-white);
+        }
+
+        /* Horizontal Menu Navigator */
+        .catalog-nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .catalog-tab-btn {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .catalog-tab-btn:hover {
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+        }
+
+        .catalog-tab-btn.active {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+            border-color: var(--primary-green);
+        }
+
+        /* Dynamic Main Workspace Container */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: start;
+            min-height: 540px;
+        }
+
+        .showcase-gallery {
+            display: flex;
+            gap: 20px;
+        }
+
+        .gallery-thumbs {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .thumb-item {
+            width: 70px;
+            height: 70px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: var(--bg-white);
+        }
+
+        .thumb-item.active {
+            border-color: var(--primary-green);
+            border-width: 2px;
+        }
+
+        .main-display-frame {
+            flex-grow: 1;
+            height: 480px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            position: relative;
+            background-color: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .main-display-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nature-badge {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-green);
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Specifications Details */
+        .specs-tag {
+            background-color: rgba(11, 66, 38, 0.1);
+            color: var(--primary-green);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .specs-title {
+            font-family: var(--font-serif);
+            font-size: 40px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .specs-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .specs-description {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .price-display-block {
+            margin-bottom: 24px;
+        }
+
+        .current-price {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .unit-label {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-left: 4px;
+        }
+
+        .weight-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .weight-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .weight-pill {
+            border: 1px solid var(--border);
+            background: var(--bg-white);
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .weight-pill.active {
+            border-color: var(--primary-green);
+            background-color: rgba(11, 66, 38, 0.02);
+            border-width: 2px;
+        }
+
+        .weight-pill .w-size {
+            font-weight: 700;
+            font-size: 14px;
+            display: block;
+        }
+
+        .weight-pill .w-price {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .action-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .compliance-trust-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .trust-item {
+            text-align: center;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .trust-item i {
+            display: block;
+            font-size: 16px;
+            color: var(--primary-green);
+            margin-bottom: 4px;
+        }
+
+        /* --- OUR STORY --- */
+        #our-story {
+            padding: 90px 0;
+            background-color: var(--bg-light);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .story-visual img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: var(--shadow);
+        }
+
+        .story-text h2 {
+            font-family: var(--font-serif);
+            font-size: 40px;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        /* --- REVIEWS & FAQ --- */
+        #reviews-faq {
+            padding: 90px 0;
+        }
+
+        .reviews-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .review-node {
+            background-color: var(--bg-white);
+            padding: 30px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .review-node p {
+            font-style: italic;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 12px 0;
+        }
+
+        .faq-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-block {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .faq-trigger {
+            padding: 20px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .faq-panel {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .faq-block.active .faq-panel {
+            padding-bottom: 20px;
+            max-height: 150px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #0c120e;
+            color: #ffffff;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.51fr 1fr;
+            gap: 40px;
+            border-bottom: 1px solid #1e2921;
+            padding-bottom: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-heading {
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+        }
+
+        .footer-base {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #71717a;
+        }
+
+        /* --- CART OVERLAY PANEL --- */
+        .cart-overlay-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .cart-overlay-mask.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-drawer-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background-color: var(--bg-white);
+            z-index: 2001;
+            transition: transform 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-overlay-mask.active .cart-drawer-panel {
+            transform: translateX(-400px);
+        }
+
+        .cart-drawer-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-items-scroller {
+            flex-grow: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .cart-drawer-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border);
+            background-color: var(--bg-light);
+        }
+
+        @media(max-width: 992px) {
+            .showcase-grid, .story-grid, .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .reviews-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ANNOUNCEMENT BAR -->
+    <div class="announcement-bar">
+        <div class="container announcement-grid">
+            <div class="announcement-item"><i class="fa-solid fa-truck"></i> Free Shipping Above ₹499</div>
+            <div class="announcement-item"><i class="fa-solid fa-leaf"></i> 100% Pure Direct Harvests</div>
+            <div class="announcement-item"><i class="fa-solid fa-location-dot"></i> Sourced Directly From Kolli Hills</div>
+        </div>
+    </div>
+
+    <!-- SITE STICKY HEADER -->
+    <header>
+        <div class="container nav-container">
+            <a href="#home" class="logo-area">
+                <div class="logo-icon-placeholder"></div>
+                <span>Spice Crowd</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#catalog-section">Shop Products</a></li>
+                    <li><a href="#our-story">Our Story</a></li>
+                    <li><a href="#reviews-faq">Reviews & FAQs</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="cart-trigger" onclick="toggleCartOverlay(true)">
+                    <i class="fa-solid fa-bag-shopping"></i> Bag <span class="cart-count-badge" id="cart-counter">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home">
+        <div class="hero-inner">
+            <h1>Elevate Every Dish with Single-Origin Spices</h1>
+            <p>From the mist-covered organic landscapes of Kolli Hills straight to your pantry. Sun-dried and delivered completely unadulterated.</p>
+            <a href="#catalog-section" class="btn btn-accent">Explore Our Harvest</a>
+        </div>
+    </section>
+
+    <!-- DYNAMIC CATALOG TRANSITION COMPONENT -->
+    <section id="catalog-section">
+        <div class="container">
+            
+            <!-- Horizontal Switcher (NO SCROLL REQUIRED) -->
+            <div class="catalog-nav-tabs">
+                <button class="catalog-tab-btn active" onclick="switchProduct('black-pepper')">Black Pepper</button>
+                <button class="catalog-tab-btn" onclick="switchProduct('cloves')">Cloves</button>
+                <button class="catalog-tab-btn" onclick="switchProduct('bay-leaf')">Bay Leaf</button>
+                <button class="catalog-tab-btn" onclick="switchProduct('cinnamon')">Cinnamon</button>
+                <button class="catalog-tab-btn" onclick="switchProduct('cardamom')">Cardamom</button>
+                <button class="catalog-tab-btn" onclick="switchProduct('coffee-powder')">Coffee Powder</button>
+                <button class="catalog-tab-btn" onclick="switchProduct('nutmeg')">Nutmeg</button>
+                <button class="catalog-tab-btn" onclick="switchProduct('cashews')">Cashew Nuts</button>
+            </div>
+
+            <!-- Single Component Container Frame -->
+            <div class="showcase-grid" id="main-showcase-view">
+                <!-- Data injected dynamically via JS below -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- OUR STORY -->
+    <section id="our-story">
+        <div class="container story-grid">
+            <div class="story-visual">
+                <img src="image.png" alt="Spice Crowd Harvest Origins">
+            </div>
+            <div class="story-text">
+                <h2>Our Story</h2>
+                <p>Established in 2021, Spice Crowd emerged from a transparent goal: to strip away the convoluted commercial middleman channels and deliver pristine, unadulterated single-origin crop treasures directly to consumers.</p>
+                <p>We build deep partnerships with local farmers spanning across high-altitude Indian zones, establishing honest fair-trade prices and guaranteeing that what arrives at your table remains completely authentic and true to its land.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS & FAQ -->
+    <section id="reviews-faq">
+        <div class="container">
+            <h2 class="section-title">What Culinary Enthusiasts Say</h2>
+            <div class="reviews-layout">
+                <div class="review-node">
+                    <span class="color: var(--accent-gold);"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    <p>"The aromatic depth of this Black Pepper completely elevated my home recipes. You instantly perceive the single-origin difference."</p>
+                    <div style="font-weight:700; font-size:12px;">- Rajesh K., Chennai</div>
+                </div>
+                <div class="review-node">
+                    <span class="color: var(--accent-gold);"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    <p>"Superb freshness metrics. The cardamom pods are dense, bright green, and packed with wonderful flavor fields."</p>
+                    <div style="font-weight:700; font-size:12px;">- Priya M., Bangalore</div>
+                </div>
+                <div class="review-node">
+                    <span class="color: var(--accent-gold);"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    <p>"Clean, robust, and completely untampered. Finding a reliable spice vendor that delivers on premium standards is rare."</p>
+                    <div style="font-weight:700; font-size:12px;">- Amit S., Mumbai</div>
+                </div>
+            </div>
+
+            <div class="faq-wrapper">
+                <div class="faq-block">
+                    <div class="faq-trigger" onclick="toggleAccordion(this)">Are your spices completely organic and additive-free? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="faq-panel">Absolutely. Spice Crowd offerings are entirely direct farm products with zero anti-caking dusts, colors, fillers, or artificial computational shelf extenders.</div>
+                </div>
+                <div class="faq-block">
+                    <div class="faq-trigger" onclick="toggleAccordion(this)">Where are these individual lines sourced? <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="faq-panel">We partner straight with multi-generational growers across isolated farm belts in India, prominently featuring high-altitude hills like Kolli Hills, Tamil Nadu.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4 class="footer-heading">Spice Crowd</h4>
+                    <p style="color:#a1a1aa; font-size:14px;">Connecting kitchens with pure, unadulterated single-origin agricultural gems since 2021.</p>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Contact Desk</h4>
+                    <p style="color:#a1a1aa; font-size:14px;">support@spicecrowd.com | +91 98765 43210</p>
+                </div>
+            </div>
+            <div class="footer-base">
+                <p>&copy; 2026 Spice Crowd. Fully compliant with national FSSAI verification framework rules.</p>
+                <p>Pure Direct Sourcing</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- OVERLAY DRAWER -->
+    <div class="cart-overlay-mask" id="global-cart-mask">
+        <div class="cart-drawer-panel">
+            <div class="cart-drawer-header">
+                <h3 style="font-size:16px; text-transform:uppercase;">Shopping Bag</h3>
+                <button style="background:none; border:none; font-size:20px; cursor:pointer;" onclick="toggleCartOverlay(false)"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="cart-items-scroller" id="cart-item-wrapper">
+                <div style="text-align:center; color:var(--text-muted); margin-top:40px;">Your bag is empty.</div>
+            </div>
+            <div class="cart-drawer-footer">
+                <div style="display:flex; justify-content:between; font-weight:700; margin-bottom:15px;">
+                    <span>Total:</span> <span id="cart-subtotal-val" style="margin-left:auto;">₹0</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="alert('Checkout integration!')">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RE-ENGINEERED COMPONENT ENGINE -->
+    <script>
+        // Data Registry containing data configurations for seamless product swaps
+        const catalogDataset = {
+            'black-pepper': {
+                tag: 'Best Seller',
+                title: 'Black Pepper',
+                sub: 'Single Origin &bull; Whole Peppercorns',
+                desc: 'Grown in perfect ecosystem elevations of Kolli Hills, our premium black pepper options unlock a profound, punchy heat profile and bold aroma.',
+                basePrice: 199,
+                unit: '250g',
+                image: 'image_2.png',
+                variants: [
+                    { size: '250g', price: 199, label: 'Fresh Pack' },
+                    { size: '500g', price: 349, label: 'Standard Pantry' },
+                    { size: '1kg', price: 649, label: 'Chef Bulk' }
+                ]
+            },
+            'cloves': {
+                tag: 'Hand Selected',
+                title: 'Premium Cloves',
+                sub: 'Premium Flower Buds &bull; Intensely Fragrant',
+                desc: 'Harvested at the absolute peak of maturity, our cloves feature incredible aromatic focus and exceptional content fields of warm natural oils.',
+                basePrice: 249,
+                unit: '200g',
+                image: 'image_2.png',
+                variants: [
+                    { size: '200g', price: 249, label: 'Standard Pack' }
+                ]
+            },
+            'bay-leaf': {
+                tag: 'Whole Leaves',
+                title: 'Bay Leaf',
+                sub: 'Sun-Dried Whole Leaves &bull; Herbal UndertONES',
+                desc: 'Perfectly preserved sweet herbal aromatic profiles. Ideal for traditional slow-cook stews, standard biryanis, and rich gravy applications.',
+                basePrice: 100,
+                unit: '100g',
+                image: 'image_2.png',
+                variants: [
+                    { size: '100g', price: 100, label: 'Standard Pack' }
+                ]
+            },
+            'cinnamon': {
+                tag: 'True Bark',
+                title: 'Cinnamon Quills',
+                sub: 'Premium Inner Bark Roll &bull; Soft Subtle Warmth',
+                desc: 'Exquisite authentic inner bark quills showcasing deep, pleasant sweet notes, avoiding the harsh profiles of low-tier cassia varieties.',
+                basePrice: 299,
+                unit: '150g',
+                image: 'image_2.png',
+                variants: [
+                    { size: '150g', price: 299, label: 'Standard Pack' }
+                ]
+            },
+            'cardamom': {
+                tag: 'Bold Green',
+                title: 'Green Cardamom',
+                sub: '8mm Large Pods &bull; Intensely Refreshing',
+                desc: 'The true queen of spices. Full seed counts packed inside gorgeous vibrant green pods, offering immediate flavor enhancement.',
+                basePrice: 399,
+                unit: '100g',
+                image: 'image_2.png',
+                variants: [
+                    { size: '100g', price: 399, label: 'Standard Pack' }
+                ]
+            },
+            'coffee-powder': {
+                tag: 'Freshly Ground',
+                title: 'Filter Coffee Powder',
+                sub: 'Premium Arabica &bull; Traditional Rich Blend',
+                desc: 'Expertly roasted locally grown mountain beans ground to fine precision, producing premium crema values and robust traditional wake-up finishes.',
+                basePrice: 175,
+                unit: '250g',
+                image: 'image_2.png',
+                variants: [
+                    { size: '250g', price: 175, label: 'Standard Pack' }
+                ]
+            },
+            'nutmeg': {
+                tag: 'Intact Shells',
+                title: 'Whole Nutmeg',
+                sub: 'Whole Kernels &bull; Aromatic Fragrance',
+                desc: 'Whole nutmeg nuts holding essential oil parameters. Ideal for fine tableside grating into delicate cream sauces or home desserts.',
+                basePrice: 149,
+                unit: '100g',
+                image: 'image_2.png',
+                variants: [
+                    { size: '100g', price: 149, label: 'Standard Pack' }
+                ]
+            },
+            'cashews': {
+                tag: 'Jumbo Grade',
+                title: 'Cashew Nuts',
+                sub: 'W210 Whole Nuts &bull; Crisp & Buttery',
+                desc: 'Impeccably sorted jumbo-sized cashews offering rich natural crunch metrics with absolutely zero processing blemishes.',
+                basePrice: 449,
+                unit: '500g',
+                image: 'image_2.png',
+                variants: [
+                    { size: '500g', price: 449, label: 'Standard Pack' }
+                ]
+            }
+        };
+
+        let activeProductKey = 'black-pepper';
+        let activePrice = 199;
+        let activeUnitSize = '250g';
+        let shoppingBag = [];
+
+        function switchProduct(key) {
+            activeProductKey = key;
+            const data = catalogDataset[key];
+            
+            // Set basic states
+            activePrice = data.basePrice;
+            activeUnitSize = data.unit;
+
+            // Highlight active navigation button
+            const tabs = document.querySelectorAll('.catalog-tab-btn');
+            tabs.forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('onclick').includes(key)) btn.classList.add('active');
+            });
+
+            // Generate HTML markup payload for container workspace dynamically
+            let variantMarkup = '';
+            data.variants.forEach((v, i) => {
+                variantMarkup += `
+                    <div class="weight-pill ${i === 0 ? 'active' : ''}" onclick="updateActiveVariant(this, ${v.price}, '${v.size}')">
+                        <span class="w-size">${v.size}</span>
+                        <span class="w-price">₹${v.price}</span>
+                    </div>`;
+            });
+
+            const renderUI = `
+                <div class="showcase-gallery">
+                    <div class="gallery-thumbs">
+                        <div class="thumb-item active"><img src="${data.image}" alt="View 1"></div>
+                    </div>
+                    <div class="main-display-frame">
+                        <img src="${data.image}" alt="${data.title}">
+                        <div class="nature-badge"><i class="fa-solid fa-seedling"></i> 100% Pure</div>
+                    </div>
+                </div>
+                <div class="specs-column">
+                    <span class="specs-tag">${data.tag}</span>
+                    <h2 class="specs-title">${data.title}</h2>
+                    <p class="specs-sub">${data.sub}</p>
+                    <p class="specs-description">${data.desc}</p>
+                    <div class="price-display-block">
+                        <span class="current-price" id="panel-price-val">₹${data.basePrice}</span>
+                        <span class="unit-label" id="panel-unit-val">/ ${data.unit}</span>
+                    </div>
+                    <div class="weight-title">Select Size Variant</div>
+                    <div class="weight-selector-grid">${variantMarkup}</div>
+                    <div class="action-row">
+                        <button class="btn btn-primary" onclick="addToCart()"><i class="fa-solid fa-cart-plus"></i> Add To Bag</button>
+                        <button class="btn btn-accent" onclick="alert('Direct Buy Route!')">Buy Now</button>
+                    </div>
+                    <div class="compliance-trust-row">
+                        <div class="trust-item"><i class="fa-solid fa-circle-check"></i> FSSAI</div>
+                        <div class="trust-item"><i class="fa-solid fa-ban"></i> Pure</div>
+                        <div class="trust-item"><i class="fa-solid fa-boxes-packing"></i> Fresh</div>
+                        <div class="trust-item"><i class="fa-solid fa-hand-holding-heart"></i> Direct</div>
+                    </div>
+                </div>`;
+
+            document.getElementById('main-showcase-view').innerHTML = renderUI;
+        }
+
+        function updateActiveVariant(pillElement, price, size) {
+            const rowPills = pillElement.parentElement.querySelectorAll('.weight-pill');
+            rowPills.forEach(p => p.classList.remove('active'));
+            pillElement.classList.add('active');
+
+            activePrice = price;
+            activeUnitSize = size;
+
+            document.getElementById('panel-price-val').innerText = `₹${price}`;
+            document.getElementById('panel-unit-val').innerText = `/ ${size}`;
+        }
+
+        function addToCart() {
+            const productInfo = catalogDataset[activeProductKey];
+            const fullLabelName = `${productInfo.title} (${activeUnitSize})`;
+            
+            shoppingBag.push({ title: fullLabelName, cost: activePrice });
+            syncCartDOM();
+            toggleCartOverlay(true);
+        }
+
+        function syncCartDOM() {
+            const listWrapper = document.getElementById('cart-item-wrapper');
+            const counter = document.getElementById('cart-counter');
+            const subtotalLabel = document.getElementById('cart-subtotal-val');
+
+            counter.innerText = shoppingBag.length;
+
+            if (shoppingBag.length === 0) {
+                listWrapper.innerHTML = '<div style="text-align:center; color:var(--text-muted); margin-top:40px;">Your bag is empty.</div>';
+                subtotalLabel.innerText = '₹0';
+                return;
+            }
+
+            let computedSum = 0;
+            let listMarkup = '';
+
+            shoppingBag.forEach((item, index) => {
+                computedSum += item.cost;
+                listMarkup += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                        <div>
+                            <div style="font-weight: 700; font-size: 13px;">${item.title}</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">₹${item.cost}</div>
+                        </div>
+                        <button onclick="discardBagItem(${index})" style="background: none; border: none; color: #ef4444; cursor: pointer;"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>`;
+            });
+
+            listWrapper.innerHTML = listMarkup;
+            subtotalLabel.innerText = `₹${computedSum}`;
+        }
+
+        function discardBagItem(index) {
+            shoppingBag.splice(index, 1);
+            syncCartDOM();
+        }
+
+        function toggleCartOverlay(state) {
+            const mask = document.getElementById('global-cart-mask');
+            if (state) mask.classList.add('active');
+            else mask.classList.remove('active');
+        }
+
+        function toggleAccordion(element) {
+            const activeBlock = element.parentElement;
+            const stateIsActive = activeBlock.classList.contains('active');
+            document.querySelectorAll('.faq-block').forEach(b => b.classList.remove('active'));
+            if (!stateIsActive) activeBlock.classList.add('active');
+        }
+
+        // Initialize default view state on page mount
+        window.onload = function() {
+            switchProduct('black-pepper');
+        };
+    </script>
+</body>
+</html>
